@@ -1,0 +1,66 @@
+/* remove navigators default to */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: rgb(247, 241, 232);
+}
+
+/* Navbar mobile inspired by Adam Nagy javascript academy */
+header a {
+  text-decoration: none;
+}
+
+header {
+  padding: 0 20px;
+  background-color: rgb(247, 241, 232);
+  z-index: 100;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  /* display: ; */
+  justify-content: content-distribution;
+  width: 100%;
+}
+
+/* Style page content */
+.main {
+  height: 100%;
+  margin-left: 240px; /* Same as the width of the sidebar */
+  padding: 20px;
+}
+.menubar > h1 {
+  position: sticky;
+  text-align: center;
+}
+
+.main {
+  width: 80%;
+  padding: 20px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+div.col h2 {
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+div.col:nth-child(1) > form > button {
+  /* padding: 20px; */
+  display: inline-block;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(247, 241, 232);
+}
+.footer p {
+  font-size: small;
+  color: darkgrey;
+  text-align: center;
+}

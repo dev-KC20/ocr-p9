@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-    <p>{{ message }}</p>
+<h2>Suivre des utilisateurs</h2>
     <form method="post">
         {{ form.as_p }}
         {% csrf_token %}
-        <button class="btn btn-default" type="submit" >Modifier le mot de passe.</button>
+        <button class="btn btn-default" type="submit">Confirmer</button>
     </form>
 {% endblock content %}

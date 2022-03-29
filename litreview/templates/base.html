@@ -9,11 +9,14 @@
 <body>
     <div class="menubar">
         <h1>LitReview</h1>
-        {% if user.is_authenticated %}
- 
-            <p><a href="{% url 'password_change' %}">Changer le mot de passe</a></p>
-            <p><a href="{% url 'logout' %}">Se déconnecter</a></p>
-        {% endif %}
+        <ul>
+
+            {% if user.is_authenticated %}
+            
+            <li><a href="{% url 'password_change' %}">Changer le mot de passe</a></li>
+            <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
+            {% endif %}
+        </ul>
     </div>
     <div class="main">
         {% block content %}{% endblock content %}

@@ -1,9 +1,10 @@
 /* remove navigators default to */
 * {
-  margin: 0;
+  margin: 5px;
   padding: 0;
   box-sizing: border-box;
   font-family: Helvetica, Arial, sans-serif;
+  font-size: large;
   background-color: rgb(247, 241, 232);
 }
 
@@ -27,14 +28,25 @@ header {
 /* Style page content */
 .main {
   height: 100%;
-  margin-left: 240px; /* Same as the width of the sidebar */
+  /* margin-left: 5px;  */
   padding: 20px;
 }
-.menubar > h1 {
+.menubar {
   position: sticky;
+}
+.menubar > h1 {
   text-align: center;
 }
 
+.menubar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.menubar li a {
+  display: block;
+  width: 60px;
+}
 .main {
   width: 80%;
   padding: 20px;
@@ -42,7 +54,13 @@ header {
   align-items: stretch;
   justify-content: center;
 }
-div.col h2 {
+.register {
+  width: 120%;
+  text-align: center;
+  align-items: center;
+}
+div.col {
+  width: 100%;
   padding-bottom: 20px;
   text-align: center;
 }
@@ -50,6 +68,29 @@ div.col h2 {
 div.col:nth-child(1) > form > button {
   /* padding: 20px; */
   display: inline-block;
+}
+
+.btn {
+  background-color: rgb(247, 241, 232);
+  border-color: grey;
+  padding: 15px 32px;
+  border-style: inset; 
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.btn-like {
+  background-color: rgb(247, 241, 232);
+  box-sizing: border-box;
+  color: black;
+  border-style: inset; 
+  border-color: grey;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
 
 .footer {

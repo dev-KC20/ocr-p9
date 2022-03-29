@@ -3,7 +3,7 @@
 <div class="col">
     <h2 >Inscrivez-vous maintenant !</h2>
     <form method="GET"  action="{% url 'signup' %}">
-        <button type="submit">S'inscrire</button>
+        <button  class="btn btn-default" type="submit">S'inscrire</button>
     </form>
     
 </div>
@@ -13,7 +13,7 @@
     <form method="post">
         {{ form.as_p }}
         {% csrf_token %}
-        <button type="submit">Se connecter</button>
+        <button class="btn btn-default" type="submit">Se connecter</button>
     </form>
 </div>
 {% endblock content %}

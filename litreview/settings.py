@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+
 from pathlib import Path
 from decouple import config
 
@@ -142,3 +143,7 @@ AUTH_USER_MODEL = "authentication.User"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = LOGIN_URL
+# uri to serve media from
+MEDIA_URL = '/media/'
+# local rep containing media
+MEDIA_ROOT = BASE_DIR.joinpath('litreview', 'media/')

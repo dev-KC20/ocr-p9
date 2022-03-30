@@ -15,12 +15,17 @@ Including another URLconf
 """
 from django.urls import path
 from django.contrib import admin
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 
+# authentication
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 import authentication.views
+import review.views
 from review.views import HomeView
 from authentication.forms import CustomAuthForm, CustomPasswordChangeForm
 
+# media
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -30,23 +35,31 @@ urlpatterns = [
         LoginView.as_view(
             template_name="authentication/login.html",
             authentication_form=CustomAuthForm,
-            redirect_authenticated_user=True
-            ),
-        name="login"
-         ),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('change-password/', PasswordChangeView.as_view(
-        template_name='authentication/password_change.html',
-         form_class=CustomPasswordChangeForm,),
-         name='password_change'
-         ),
-    path('change-password-done/', PasswordChangeDoneView.as_view(
-        template_name='authentication/password_change_done.html'),
-         name='password_change_done'
-         ),
+            redirect_authenticated_user=True,
+        ),
+        name="login",
+    ),
+    path("logout/", LogoutView.as_view(), name="logout"),
     path(
-        "home",
-        HomeView.as_view(template_name="review/home.html"),
-        name="home"
-         ),
+        "change-password/",
+        PasswordChangeView.as_view(
+            template_name="authentication/password_change.html",
+            form_class=CustomPasswordChangeForm,
+        ),
+        name="password_change",
+    ),
+    path(
+        "change-password-done/",
+        PasswordChangeDoneView.as_view(template_name="authentication/password_change_done.html"),
+        name="password_change_done",
+    ),
+    path("home", HomeView.as_view(template_name="review/home.html"), name="home"),
+    path(
+        "review/create-ticket",
+        review.views.create_ticket,
+        name="create_ticket",
+    ),
 ]
+# lowtech file storage solution for academic purpose & money wise
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

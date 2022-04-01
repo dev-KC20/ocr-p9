@@ -1,13 +1,22 @@
 from django.conf import settings
-from django.views.generic import TemplateView
+from django.views.generic import ListView, DetailView  # TemplateView,
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect  # get_object_or_404
 from . import forms
 
+from review.models import Ticket
 
-class HomeView(LoginRequiredMixin, TemplateView):
+
+class HomeView(LoginRequiredMixin, ListView):
+    model = Ticket
     template_name = "review/home.html"
+    paginate_by = 11
+
+
+class TicketDetailView(LoginRequiredMixin, DetailView):
+    model = Ticket
+    template_name = "review/show_ticket.html"
 
 
 @login_required

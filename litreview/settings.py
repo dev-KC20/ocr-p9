@@ -146,4 +146,4 @@ LOGOUT_REDIRECT_URL = LOGIN_URL
 # uri to serve media from
 MEDIA_URL = '/media/'
 # local rep containing media
-MEDIA_ROOT = BASE_DIR.joinpath('litreview', 'media/')
+MEDIA_ROOT = BASE_DIR.joinpath('litreview/', 'media/')

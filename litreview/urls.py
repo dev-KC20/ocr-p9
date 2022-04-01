@@ -18,9 +18,10 @@ from django.contrib import admin
 
 # authentication
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
+
 import authentication.views
 import review.views
-from review.views import HomeView
+from review.views import HomeView, TicketDetailView
 from authentication.forms import CustomAuthForm, CustomPasswordChangeForm
 
 # media
@@ -58,6 +59,11 @@ urlpatterns = [
         "review/create-ticket",
         review.views.create_ticket,
         name="create_ticket",
+    ),
+    path(
+        "review/<int:pk>/view",
+        TicketDetailView.as_view(),
+        name="show_ticket",
     ),
 ]
 # lowtech file storage solution for academic purpose & money wise

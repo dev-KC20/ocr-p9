@@ -1,6 +1,36 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
 <h1> Bienvenue lecteur !</h1>
+<div class="ticket-list">
+    <h2>Demande d'avis</h2>
+    <ol>
+        {% for ticket in ticket_list%}
+        <li>
+            <a href="{% url 'show_ticket' ticket.id %} "><img src="{% static '/img/eye.svg' %}"></a>
+            {{ticket.title}} - {{ticket.description}} - {{ticket.time_created}}
+        </li>
+        {% endfor%}
 
-{% endblock content %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; début</a>
+                <a href="?page={{ page_obj.previous_page_number }}">précédent</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">suivant</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">dernier &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+        {% endblock content %}
+    </ol>
+</div>

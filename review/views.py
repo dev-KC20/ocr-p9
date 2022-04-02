@@ -11,7 +11,7 @@ from review.models import Ticket
 class HomeView(LoginRequiredMixin, ListView):
     model = Ticket
     template_name = "review/home.html"
-    paginate_by = 11
+    paginate_by = 5
 
 
 class TicketDetailView(LoginRequiredMixin, DetailView):

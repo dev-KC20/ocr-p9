@@ -31,10 +31,12 @@ header {
   /* margin-left: 5px;  */
   padding: 20px;
 }
+
 .menubar {
   position: sticky;
 }
-.menubar > h1 {
+
+.menubar>h1 {
   text-align: center;
 }
 
@@ -43,28 +45,66 @@ header {
   margin: 0;
   padding: 0;
 }
+
 .menubar li a {
   width: 60px;
 }
+
 .main {
-  width: 80%;
+  width: 100%;
   padding: 20px;
   display: flex;
   align-items: stretch;
   justify-content: center;
 }
+
 .register {
   width: 120%;
   text-align: center;
   align-items: center;
 }
+.ticket-list {
+  max-height: 100%;
+  /* height: 80%; */
+  overflow-y: auto;
+
+}
+.ticket-list > ol > li {
+  max-height: 20%;
+  overflow-y: auto;
+
+}
+
+.pagination {
+  position:fixed;
+  bottom:30px;
+  /* float: none; */
+  /* display:inline; */
+  
+  font-size: small;
+  color: blue;
+  text-align: center;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+.pagination a {
+  /* display:inline; */
+  color: blue;
+  /* float: none; */
+  padding: 16px 16px;
+  /* text-decoration: none; */
+}
+
 div.col {
   width: 100%;
   padding-bottom: 20px;
   text-align: center;
 }
 
-div.col:nth-child(1) > form > button {
+div.col:nth-child(1)>form>button {
   /* padding: 20px; */
   display: inline-block;
 }
@@ -73,17 +113,18 @@ div.col:nth-child(1) > form > button {
   background-color: rgb(247, 241, 232);
   border-color: grey;
   padding: 15px 32px;
-  border-style: inset; 
+  border-style: inset;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
 }
+
 .btn-like {
   background-color: rgb(247, 241, 232);
   box-sizing: border-box;
   color: black;
-  border-style: inset; 
+  border-style: inset;
   border-color: grey;
   padding: 15px 32px;
   text-align: center;
@@ -99,6 +140,7 @@ div.col:nth-child(1) > form > button {
   width: 100%;
   background-color: rgb(247, 241, 232);
 }
+
 .footer p {
   font-size: small;
   color: darkgrey;

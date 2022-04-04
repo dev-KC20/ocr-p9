@@ -21,7 +21,7 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView,
 
 import authentication.views
 import review.views
-from review.views import HomeView, TicketDetailView
+from review.views import HomeView, TicketDetailView, TicketCreate
 from authentication.forms import CustomAuthForm, CustomPasswordChangeForm
 
 # media
@@ -59,6 +59,11 @@ urlpatterns = [
         "review/create-ticket",
         review.views.create_ticket,
         name="create_ticket",
+    ),
+    path(
+        "review/open-ticket",
+        TicketCreate.as_view(),
+        name="open_ticket",
     ),
     path(
         "review/<int:pk>/view",

@@ -10,7 +10,8 @@
         <br>
         {{ form.as_p }}
         {% csrf_token %}
-        <a href="{% url 'home' %}" class="btn-like">Retourner</a>
+        <button type="button" class="btn btn-primary" onclick="window.history.back();">Cancel</button>
+
         <button  class="btn btn-default" type="submit" >S’inscrire</button>
     </form>
 

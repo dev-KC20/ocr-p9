@@ -54,10 +54,15 @@ header {
   width: 100%;
   padding: 20px;
   display: flex;
-  align-items: stretch;
+  align-items: normal;
   justify-content: center;
 }
-
+.main > img {
+  height: fit-content;
+}
+.main > p {
+  margin: 5px;
+}
 .register {
   width: 120%;
   text-align: center;
@@ -71,7 +76,7 @@ header {
 }
 .ticket-list > ol > li {
   max-height: 20%;
-  overflow-y: auto;
+  overflow-y: clip;
 
 }
 

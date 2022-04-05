@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.views.generic import ListView, DetailView  # TemplateView,
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect  # get_object_or_404
@@ -46,9 +46,18 @@ class TicketCreate(CreateView, LoginRequiredMixin):
     success_url = '/home'
 
     def form_valid(self, form):
-        # ticket = self.form_class.save(commit=False)
-        # ticket.user = self.request.user
-        # ticket.save()
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class TicketUpdate(UpdateView, LoginRequiredMixin):
+    model = Ticket
+    # fields = '__all__'
+    form_class = TicketForm
+    template_name = 'review/update_ticket.html'
+    success_url = '/home'
+
+    def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 

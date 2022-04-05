@@ -10,7 +10,8 @@
         <li>
             {{ticket.title}} - {{ticket.time_created}} <br>
             {{ticket.description|slice:"0:200"}} 
-            <a href="{% url 'show_ticket' ticket.id %} "><img src="{% static '/img/eye.svg' %}">... click to read more.</a>
+            <a href="{% url 'show_ticket' ticket.id %} "><img src="{% static '/img/eye.svg' %}"></a>
+            <a href="{% url 'update_ticket' ticket.id %} "><img src="{% static '/img/pencil.svg' %}"></a>
         </li>
         {% endfor%}
     </ol>

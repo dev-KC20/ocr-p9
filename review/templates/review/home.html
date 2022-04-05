@@ -5,6 +5,15 @@
 <h1> Bienvenue lecteur !</h1>
 <div class="ticket-list">
     <h2>Demande d'avis</h2>
+    
+    <form method="GET"  action="{% url 'create_ticket' %}">
+        <button  class="btn btn-default" type="submit">Demander une critique</button>
+    </form>
+    
+    <form method="GET"  action="{% url 'create_review' %}">
+        <button  class="btn btn-default" type="submit">Créer une critique</button>
+    </form>
+
     <ol>
         {% for ticket in ticket_list%}
         <li>

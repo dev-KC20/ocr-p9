@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect  # get_object_or_404
 from . import forms
 
-from review.models import Ticket
+from review.models import Ticket, Review
 from review.forms import TicketForm
 
 
@@ -23,9 +23,19 @@ class TicketDetailView(DetailView, LoginRequiredMixin):
 
 class TicketCreate(CreateView, LoginRequiredMixin):
     model = Ticket
-    # fields = '__all__'
     form_class = TicketForm
     template_name = 'review/create_ticket.html'
+    success_url = '/home'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class ReviewCreate(CreateView, LoginRequiredMixin):
+    model = Review
+    fields = '__all__'
+    template_name = 'review/create_review.html'
     success_url = '/home'
 
     def form_valid(self, form):

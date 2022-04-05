@@ -4,8 +4,9 @@
     <h2>Modifier un ticket {{form.id}}</h2>
     <form method="post" enctype="multipart/form-data">
         {{ form.as_p }}
+        <img src="{{object.image.url}}">
         {% csrf_token %}
-        <button type="submit" >Envoyer</button>
+        <button type="submit" value="Update" >Envoyer</button>
     </form>
 
 {% endblock content %}

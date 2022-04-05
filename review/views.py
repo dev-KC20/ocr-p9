@@ -21,28 +21,11 @@ class TicketDetailView(DetailView, LoginRequiredMixin):
     template_name = "review/show_ticket.html"
 
 
-@login_required
-def create_ticket(request):
-    ticket_form = forms.TicketForm()
-    if request.method == "POST":
-        ticket_form = forms.TicketForm(request.POST, request.FILES)
-        if ticket_form.is_valid():
-            ticket = ticket_form.save(commit=False)
-            ticket.user = request.user
-            ticket.save()
-            return redirect(settings.LOGIN_REDIRECT_URL)
-    context = {
-        "ticket_form": ticket_form,
-    }
-    return render(request, "review/create_ticket.html", context=context)
-
-
-# new version create_ticket based on CBV
 class TicketCreate(CreateView, LoginRequiredMixin):
     model = Ticket
     # fields = '__all__'
     form_class = TicketForm
-    template_name = 'review/open_ticket.html'
+    template_name = 'review/create_ticket.html'
     success_url = '/home'
 
     def form_valid(self, form):

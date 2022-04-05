@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <h2>Afficher le ticket</h2>
-   <img src="{{object.image.url}}" >
-    <p>
-        {{ object.title }}
-    </p>
-    {{ object.description }}
-    {{ object.user }}
-    {{ object.time_created }}
-    {% csrf_token %}
+<h2>Afficher le ticket</h2>
+    <h3> {{ object.title }} </h3>
+        <img src="{{object.image.url}}">
+            <p>
+                {{ object.description }}
+            </p>
+        {{ object.user }}
+        {{ object.time_created }}
+        {% csrf_token %}
 
 {% endblock content %}

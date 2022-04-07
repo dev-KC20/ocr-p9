@@ -14,36 +14,6 @@
         <button  class="btn btn-default" type="submit">Créer une critique</button>
     </form>
 
-    <ol>
-        {% for ticket in ticket_list%}
-        <li>
-            {{ticket.title}} - {{ticket.time_created}} <br>
-            {{ticket.description|slice:"0:200"}} 
-            <a href="{% url 'show_ticket' ticket.id %} "><img src="{% static '/img/eye.svg' %}"></a>
-            <a href="{% url 'update_ticket' ticket.id %} "><img src="{% static '/img/pencil.svg' %}"></a>
-        </li>
-        {% endfor%}
-    </ol>
-        
-    {% if page_obj %}
-    <div class="pagination">
-            <span class="step-links">
-                {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; début</a>
-                <a href="?page={{ page_obj.previous_page_number }}">précédent</a>
-                {% endif %}
-                
-                <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-                
-                {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">suivant</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">dernier &raquo;</a>
-                {% endif %}
-            </span>
-        </div>
-        {% endif %}
         
 </div>
 {% endblock content %}

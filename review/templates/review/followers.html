@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h1> Bienvenue lecteur !</h1>
+<div class="followers-list">
+
+
+    <h2>Abonnés </h2>
+
+    {% if messages %}
+    {% for message in messages %}
+    <p class="alert alert-dismissable {% if message.tags %}alert-{{ message.tags }}" {% endif %}>
+        <strong> {{ message }} </strong>
+    </p>
+    {% endfor %}
+    {% endif %}
+
+    {% if object_list %}
+
+    <ul>
+        {% for subs in object_list %}
+        <li>
+            <a>{{subs.user}} - #{{subs.id}} - relation:{{subs.id}}</a>
+
+
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Aucun abonné en ce moment.</p>
+    {% endif %}
+
+
+</div>
+{% endblock content %}

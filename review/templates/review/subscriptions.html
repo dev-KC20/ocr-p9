@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h1> Bienvenue lecteur !</h1>
+<div class="followers-list">
+
+
+    <h2>Abonnements </h2>
+
+    {% if messages %}
+    {% for message in messages %}
+    <p class="alert alert-dismissable {% if message.tags %}alert-{{ message.tags }}" {% endif %}>
+        <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> -->
+        <strong> {{ message }} </strong>
+    </p>
+    {% endfor %}
+    {% endif %}
+
+    {% if object_list %}
+
+    <ul>
+        {% for subs in object_list %}
+        <li>
+            <a>{{subs.followed_user}} - #{{subs.followed_user.id}} - relation:{{subs.id}}</a>
+
+            <form method="POST" action="{% url 'unsubscribe_user' pk=subs.id  %}">
+                {% csrf_token %}
+                <button class="btn btn-default" type="submit">Se désabonner</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Aucun abonnement en cours.</p>
+    {% endif %}
+
+
+</div>
+{% endblock content %}

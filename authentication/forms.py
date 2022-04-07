@@ -27,7 +27,7 @@ class SignupForm(UserCreationForm):
 class CustomPasswordChangeForm(PasswordChangeForm):
     class Meta:
         model = get_user_model()
-        
+
     old_password = forms.CharField(label="", widget=forms.PasswordInput(attrs={"placeholder": "Ancien Mot de Passe"}))
     new_password1 = forms.CharField(
         label="", widget=forms.PasswordInput(attrs={"placeholder": "Nouveau Mot de Passe"})

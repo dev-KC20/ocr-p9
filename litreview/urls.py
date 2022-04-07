@@ -20,7 +20,18 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 
 import authentication.views
-from review.views import HomeView, TicketDetailView, TicketCreate, TicketUpdate, ReviewCreate
+import review.views
+from review.views import (
+    HomeView,
+    TicketDetailView,
+    TicketCreateView,
+    TicketUpdateView,
+    ReviewCreateView,
+    UserSubscribeView,
+    UserSubscriptionView,
+    UserUnsubscribeView,
+    UserFollowersView,
+)
 from authentication.forms import CustomAuthForm, CustomPasswordChangeForm
 
 # media
@@ -53,26 +64,47 @@ urlpatterns = [
         PasswordChangeDoneView.as_view(template_name="authentication/password_change_done.html"),
         name="password_change_done",
     ),
-    path("home", HomeView.as_view(template_name="review/home.html"), name="home"),
+    path("review/feed/", review.views.feed, name="feed"),
+    path("home/", HomeView.as_view(template_name="review/home.html"), name="home"),
     path(
-        "review/create-ticket",
-        TicketCreate.as_view(),
+        "review/create-ticket/",
+        TicketCreateView.as_view(),
         name="create_ticket",
     ),
     path(
-        "review/create-review",
-        ReviewCreate.as_view(),
+        "review/create-review/",
+        ReviewCreateView.as_view(),
         name="create_review",
     ),
     path(
-        "review/<int:pk>/update",
-        TicketUpdate.as_view(),
+        "review/<int:pk>/update/",
+        TicketUpdateView.as_view(),
         name="update_ticket",
     ),
     path(
-        "review/<int:pk>/view",
+        "review/<int:pk>/view/",
         TicketDetailView.as_view(),
         name="show_ticket",
+    ),
+    path(
+        "review/subscribe/",
+        UserSubscribeView.as_view(),
+        name="subscribe_user",
+    ),
+    path(
+        "review/subscriptions/",
+        UserSubscriptionView.as_view(),
+        name="subscriptions",
+    ),
+    path(
+        "review/<int:pk>/unsubscribe/",
+        UserUnsubscribeView.as_view(),
+        name="unsubscribe_user",
+    ),
+    path(
+        "review/followers/",
+        UserFollowersView.as_view(),
+        name="followers",
     ),
 ]
 # lowtech file storage solution for academic purpose & money wise

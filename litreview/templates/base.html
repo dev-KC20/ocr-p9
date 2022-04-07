@@ -12,10 +12,13 @@
         <ul>
 
             {% if user.is_authenticated %}
-            
-            <li><a href="{% url 'home' %}">Acceuil</a></li>
+            Bonjour {{user.username}} #{{user.id}}
+            <li><a href="{% url 'feed' %}">Acceuil</a></li>
             <li><a href="{% url 'password_change' %}">Changer le mot de passe</a></li>
             <li><a href="{% url 'create_ticket' %}">Créer un ticket</a></li>
+            <li><a href="{% url 'subscribe_user' %}">S'abonner</a></li>
+            <li><a href="{% url 'subscriptions' %}">Abonnements</a></li>
+            <li><a href="{% url 'followers' %}">Abonnés</a></li>
             <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
             {% endif %}
         </ul>

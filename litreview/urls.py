@@ -31,6 +31,7 @@ from review.views import (
     UserSubscriptionView,
     UserUnsubscribeView,
     UserFollowersView,
+    UserSubscriptionsView,
 )
 from authentication.forms import CustomAuthForm, CustomPasswordChangeForm
 
@@ -105,6 +106,11 @@ urlpatterns = [
         "review/followers/",
         UserFollowersView.as_view(),
         name="followers",
+    ),
+    path(
+        "review/subscription/",
+        UserSubscriptionsView.as_view(),
+        name="user_subscriptions",
     ),
 ]
 # lowtech file storage solution for academic purpose & money wise

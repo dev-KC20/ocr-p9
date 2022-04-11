@@ -66,6 +66,17 @@ header {
   margin: 5px;
 }
 
+.subscribe {
+  border: solid  1px black;
+}
+.follower {
+  border: dotted 1px black;
+}
+.subscription {
+  border: dotted 1px black;
+}
+
+
 .register {
   width: 120%;
   text-align: center;
@@ -84,7 +95,8 @@ header {
   overflow-y: clip;
 
 }
-.alert > strong {
+
+.alert>strong {
   color: crimson;
   animation: blink 2s linear infinite;
 }
@@ -93,9 +105,11 @@ header {
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: .5;
   }
+
   100% {
     opacity: 1;
   }

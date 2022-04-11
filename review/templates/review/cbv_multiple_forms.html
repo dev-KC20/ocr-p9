@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="subscribe">
+    {% if forms.subscribe.errors %}
+    {% for field in forms.subscribe %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in forms.subscribe.non_field_errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <h2>S'abonner</h2>
+    <form method="post"> {% csrf_token %}
+        {{ forms.subscribe.followed_user }}
+        <button type="submit" value="subscribe">Envoyer</button>
+    </form>
+</div>
+
+
+
+<div class="follower">
+    {% if forms.follower.errors %}
+    {% for field in forms.follower %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in forms.follower.non_field_errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <h2>Abonnés</h2>
+    {% if forms.follower.former_following_user %}
+
+    <ul>
+        {% for subs in forms.follower.former_following_user %}
+        <li>
+            <a>{{subs.user}} - #{{subs.id}} - relation:{{subs.id}}</a>
+
+
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Aucun abonné en ce moment.</p>
+    {% endif %}
+</div>
+
+<div class="subscription">
+    {% if forms.subscription.errors %}
+    {% for field in forms.subscription %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in forms.subscription.non_field_errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <h2>Abonnements</h2>
+    {% if forms.subscription.followed_user %}
+    <ul>
+        {% for subs in forms.subscription.initial.former_followed_user %}
+        <li>
+            <a>{{subs.followed_user_id}} - {{subs.followed_user_id.user}} - #relation:{{subs.id}} </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Aucun abonnement en ce moment.</p>
+    {% endif %}
+</div>
+
+
+{% endblock content %}

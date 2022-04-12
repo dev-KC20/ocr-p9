@@ -4,17 +4,16 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import CharField, Value
-from django.http import HttpResponseRedirect  # HttpResponse,
+# from django.http import HttpResponseRedirect  # HttpResponse,
 from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy  # reverse,
 
 # from django.conf import settings
 from django.views.generic import DetailView, ListView  # TemplateView,
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from review.forms import FollowerForm, SubscribeForm, SubscriptionForm, TicketForm, UserSubscribeForm
+from review.forms import TicketForm, UserSubscribeForm
 from review.models import Review, Ticket, UserFollows
-from review.multiforms import MultiFormsView
 
 # class SuccessDeleteMessageMixin:
 #     success_message = ""
@@ -137,95 +136,3 @@ class UserFollowersView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return UserFollows.objects.filter(followed_user=self.request.user)
 
-
-""" Multiform extras
-"""
-
-
-def form_redir(request):
-    return render(request, "review/cbv_multiple_forms.html")
-
-
-def multiple_forms(request):
-    if request.method == "POST":
-        follower_form = FollowerForm(request.POST)
-        subscription_form = SubscriptionForm(request.POST)
-        subscribe_form = SubscribeForm(request.POST)
-        if follower_form.is_valid() or subscription_form.is_valid() or subscribe_form.is_valid():
-            # Do the needful
-            return HttpResponseRedirect(reverse("form-redirect"))
-    else:
-        follower_form = FollowerForm()
-        subscription_form = SubscriptionForm()
-        subscribe_form = SubscribeForm()
-
-    return render(
-        request,
-        "review/multiple_forms.html",
-        {
-            "follower_form": follower_form,
-            "subscription_form": subscription_form,
-            "subscribe_form": subscribe_form,
-        },
-    )
-
-
-class UserSubscriptionsView(MultiFormsView):
-    template_name = "review/cbv_multiple_forms.html"
-    form_classes = {
-        "follower": FollowerForm,
-        "subscription": SubscriptionForm,
-        "subscribe": SubscribeForm,
-    }
-
-    success_urls = {
-        "follower": reverse_lazy("form-redirect"),
-        "subscription": reverse_lazy("form-redirect"),
-        "subscribe": reverse_lazy("form-redirect"),
-    }
-
-    def get_subscribe_initial(self):
-        """passe l'utilisateur connecté et ses follower au contexte.
-        This is necessary to only display members that belong to a given user"""
-        kwargs = {}
-        kwargs["request_user"] = self.request.user
-        kwargs["former_followed_user"] = UserFollows.objects.filter(user=self.request.user)
-        return kwargs
-
-    def get_subscription_initial(self):
-        """passe l'utilisateur connecté et ses follower au contexte.
-        This is necessary to only display members that belong to a given user"""
-        kwargs = {}
-        kwargs["request_user"] = self.request.user
-        kwargs["former_followed_user"] = UserFollows.objects.filter(user=self.request.user)
-        return kwargs
-
-    def get_follower_initial(self):
-        """passe l'utilisateur connecté et ses follower au contexte.
-        This is necessary to only display members that belong to a given user"""
-        kwargs = {}
-        kwargs["request_user"] = self.request.user
-        kwargs["former_following_user"] = UserFollows.objects.filter(followed_user=self.request.user)
-        return kwargs
-
-    def follower_form_valid(self, form):
-        # user = form.cleaned_data.get("user")
-        # followed_user = form.cleaned_data.get("followed_user")
-        form_name = form.cleaned_data.get("action")
-        # print(user, followed_user)
-        return HttpResponseRedirect(self.get_success_url(form_name))
-
-    def subscription_form_valid(self, form):
-        user = form.cleaned_data.get("user")
-        followed_user = form.cleaned_data.get("followed_user")
-        form_name = form.cleaned_data.get("action")
-        print(user, followed_user)
-        return HttpResponseRedirect(self.get_success_url(form_name))
-        # return HttpResponseRedirect("review/subscription/")
-
-    def subscribe_form_valid(self, form):
-        user = form.cleaned_data.get("user")
-        followed_user = form.cleaned_data.get("followed_user")
-        form_name = form.cleaned_data.get("action")
-        print(user, followed_user)
-        return HttpResponseRedirect(self.get_success_url(form_name))

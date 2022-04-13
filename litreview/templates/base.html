@@ -1,33 +1,48 @@
-{% load static %}
+<!DOCTYPE html>
 <html>
 
 <head>
+    <meta charset="utf-8" />
+    {% load static %}
+
     <title>LitReview reborn</title>
-    <link rel="stylesheet" href="{% static 'app.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static '/img/favicon.ico' %}">
+
 </head>
 
 <body>
-    <div class="menubar">
-        <h1>LitReview</h1>
-        <ul>
+    <div class="navbar">
+        {% if user.is_authenticated %}
+            <a class="navbar-welcome">Bonjour {{user.username}} #{{user.id}}</a>
+        {% endif %}
+        <a  class="navbar-brand">LitReview</a>
+        
+        {% if user.is_authenticated %}
+        <!-- <a href="{% url 'password_change' %}" class="navbar-item">Changer le mot de passe</a>
+        <a href="{% url 'create_ticket' %}" class="navbar-item">Créer un ticket</a>
+        <a href="{% url 'subscribe_user' %}" class="navbar-item">S'abonner</a>
+        <a href="{% url 'subscription' %}" class="navbar-item">Abonnement v0</a>
+        <a href="{% url 'followers' %}" class="navbar-item">Abonnés</a>
+        <a  class="navbar-item">    |->|    </a> -->
+            <a href="{% url 'logout' %}" class="navbar-item">Se déconnecter</a>
+            <a href="{% url 'subscriptions' %}" class="navbar-item">Abonnements</a>
+            <a  class="navbar-item">Posts</a>
+            <a href="{% url 'feed' %}" class="navbar-item">Flux</a>
+        {% endif %}
+    </div>
 
-            {% if user.is_authenticated %}
-            Bonjour {{user.username}} #{{user.id}}
-            <li><a href="{% url 'feed' %}">Acceuil</a></li>
-            <li><a href="{% url 'password_change' %}">Changer le mot de passe</a></li>
-            <li><a href="{% url 'create_ticket' %}">Créer un ticket</a></li>
-            <li><a href="{% url 'subscribe_user' %}">S'abonner</a></li>
-            <li><a href="{% url 'subscriptions' %}">Abonnements</a></li>
-            <li><a href="{% url 'followers' %}">Abonnés</a></li>
-            <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
-            {% endif %}
-        </ul>
-    </div>
     <div class="main">
-        {% block content %}{% endblock content %}
+        {% block content %}
+
+        {% endblock %}
+
+        <footer>
+            <div class="footer" aria-disabled="false">
+                <p> Credits to Openclassrooms.fr based on django - this site doesn't track any of your data</p>
+            </div>
+        </footer>
     </div>
-    <div class="footer" aria-disabled="false">
-        <p> Credits to Openclassrooms.fr based on django - this site doesn't track any of your data</p>
-      </div>
 </body>
+
 </html>

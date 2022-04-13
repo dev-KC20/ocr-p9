@@ -25,29 +25,45 @@ header {
   width: 100%;
 }
 
+.navbar {
+  font-size: 1em;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: black;
+  /* padding: 8px 5px 8px 5px; */
+  /* border: dotted 1px black; */
+}
+
+.navbar a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar-welcome {
+  font-size: 1.2em;
+  font-weight: lighter;
+}
+
+.navbar-brand {
+  font-size: 1.2em;
+  font-weight: lighter;
+  position: fixed;
+  top: 2px;
+  left: 45%;
+}
+
+.navbar-item {
+  font-size: small;
+  font-variant: small-caps;
+  margin-left: 5px;
+  float: right;
+}
+
+
 /* Style page content */
 .main {
-  height: 100%;
-  /* margin-left: 5px;  */
-  padding: 20px;
-}
-
-.menubar {
-  position: sticky;
-}
-
-.menubar>h1 {
-  text-align: center;
-}
-
-.menubar ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.menubar li a {
-  width: 60px;
+  /* height: 100%; */
+  padding: 5px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .main {
@@ -67,11 +83,13 @@ header {
 }
 
 .subscribe {
-  border: solid  1px black;
+  border: solid 1px black;
 }
+
 .follower {
   border: dotted 1px black;
 }
+
 .subscription {
   border: dotted 1px black;
 }
@@ -182,7 +200,10 @@ div.col:nth-child(1)>form>button {
 }
 
 .footer p {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: small;
   color: darkgrey;
+  /* background-color: lightslategray; */
   text-align: center;
+  padding: 8px 5px 8px 5px;
 }

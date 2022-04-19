@@ -1,40 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
 
-<h1> Bienvenue lecteur !</h1>
-<div class="followers-list">
+<div class="subscribe">
+    <h2>S'abonner</h2>
+    <form method="post"> {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" value="subscribe">Envoyer</button>
+    </form>
+</div>
 
-
-    <h2>Abonnements </h2>
-
-    {% if messages %}
-    {% for message in messages %}
-    <p class="alert alert-dismissable {% if message.tags %}alert-{{ message.tags }}" {% endif %}>
-        <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> -->
-        <strong> {{ message }} </strong>
-    </p>
-    {% endfor %}
-    {% endif %}
-
-    {% if object_list %}
-
+<div class="follower">
+    <h2>Abonnés</h2>
     <ul>
-        {% for subs in object_list %}
-        <li>
-            <a>{{subs.followed_user}} - #{{subs.followed_user.id}} - relation:{{subs.id}}</a>
+        {% for subs in form_follower %}
+        <li> <a>{{subs.user}}
 
-            <form method="POST" action="{% url 'unsubscribe_user' pk=subs.id  %}">
-                {% csrf_token %}
-                <button class="btn btn-default" type="submit">Se désabonner</button>
-            </form>
+            </a> </li>
+        {% empty %}
+        <li>
+            <p>Aucun abonné en ce moment.</p>
         </li>
         {% endfor %}
     </ul>
-    {% else %}
-    <p>Aucun abonnement en cours.</p>
-    {% endif %}
-
-
 </div>
+
+<div class="subscription">
+    <h2>Abonnements</h2>
+    <ul>
+        {% for subs in form_subscription %}
+        <li> {{subs.followed_user}} <form method="POST" action="{% url 'unsubscribe_user' pk=subs.id  %}">
+                {% csrf_token %} <button class="btn btn-default" type="submit">Se désabonner</button> </form>
+
+        </li>
+        {% empty %}
+        <li>
+            <p>Aucun abonnement en ce moment.</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
 {% endblock content %}

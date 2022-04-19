@@ -4,29 +4,15 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import CharField, Value
-# from django.http import HttpResponseRedirect  # HttpResponse,
-from django.shortcuts import render
+
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy  # reverse,
 
-# from django.conf import settings
 from django.views.generic import DetailView, ListView  # TemplateView,
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView  # , FormView
 
-from review.forms import TicketForm, UserSubscribeForm
+from review.forms import TicketForm, UserSubscriptionsForm
 from review.models import Review, Ticket, UserFollows
-
-# class SuccessDeleteMessageMixin:
-#     success_message = ""
-
-#     def delete(self, *args, **kwargs):
-#         response = super().delete(*args, **kwargs)
-#         success_message = self.get_success_message()
-#         if success_message:
-#             messages.success(self.request, success_message)
-#         return response
-
-#     def get_success_message(self):
-#         return self.success_message
 
 
 @login_required()
@@ -85,35 +71,6 @@ class TicketUpdateView(UpdateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
-class UserSubscribeView(CreateView, LoginRequiredMixin):
-    model = UserFollows
-    form_class = UserSubscribeForm
-    template_name = "review/subscribe_user.html"
-    success_url = "/home"
-
-    def get_form_kwargs(self):
-        """Passes the request object to the form class.
-        This is necessary to only display members that belong to a given user"""
-        kwargs = super(UserSubscribeView, self).get_form_kwargs()
-        kwargs["request_user"] = self.request.user
-        kwargs["former_followed_user"] = UserFollows.objects.filter(user=self.request.user)
-        return kwargs
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.user = self.request.user
-        self.object.save()
-        return super().form_valid(form)
-
-
-class UserSubscriptionView(LoginRequiredMixin, ListView):
-    model = UserFollows
-    template_name = "review/subscriptions.html"
-
-    def get_queryset(self):
-        return UserFollows.objects.filter(user=self.request.user)
-
-
 class UserUnsubscribeView(DeleteView, LoginRequiredMixin):
     model = UserFollows
     success_url = reverse_lazy("subscriptions")
@@ -129,10 +86,39 @@ class UserUnsubscribeView(DeleteView, LoginRequiredMixin):
         return reverse_lazy("subscriptions")
 
 
-class UserFollowersView(LoginRequiredMixin, ListView):
+class UserSubscriptionsView(LoginRequiredMixin, CreateView):
     model = UserFollows
-    template_name = "review/followers.html"
+    form_class = UserSubscriptionsForm
+    template_name = "review/subscriptions.html"
+    success_url = reverse_lazy("subscriptions")
 
-    def get_queryset(self):
-        return UserFollows.objects.filter(followed_user=self.request.user)
+    def get(self, request):
+        """provide the 2 inputs to followers & subscription"""
+        subscription_list = UserFollows.objects.filter(user=self.request.user)
+        follower_list = UserFollows.objects.filter(followed_user=self.request.user)
 
+        form = self.form_class(request_user=self.request.user, former_followed_user=subscription_list)
+
+        context = {
+            "form": form,
+            "form_follower": follower_list,
+            "form_subscription": subscription_list,
+        }
+        return render((request), self.template_name, context=context)
+
+    def post(self, request):
+        """manage post then save subcribed user"""
+        subscription_list = UserFollows.objects.filter(user=self.request.user)
+        follower_list = UserFollows.objects.filter(followed_user=self.request.user)
+        form = self.form_class(request.POST, request_user=self.request.user, former_followed_user=subscription_list)
+        if form.is_valid():
+            subscribed_user = form.cleaned_data.get("followed_user")
+            current_user = self.request.user
+            UserFollows.objects.create(user=current_user, followed_user=subscribed_user)
+            return redirect("subscriptions")
+        context = {
+            "form": form,
+            "form_follower": follower_list,
+            "form_subscription": subscription_list,
+        }
+        return render((request), self.template_name, context=context)

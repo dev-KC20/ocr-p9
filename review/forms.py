@@ -2,6 +2,8 @@
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from . import models
+
+# from authentication.models import User
 from django import forms
 
 
@@ -21,14 +23,22 @@ class ReviewForm(ModelForm):
         fields = ["ticket", "rating", "user", "headline", "body"]
 
 
-class UserSubscribeForm(ModelForm):
+class UserSubscriptionsForm(ModelForm):
+    """
+    UI: remove label but use placeholder
+    validation: Check the user to subscribe to
+
+    """
+
     def __init__(self, *args, **kwargs):
-        """Grants access to the request object so that only members of the current user
-        are given as options"""
-        self.request_user = kwargs.pop("request_user")
-        self.former_followed_user = kwargs.pop("former_followed_user")
-        super(UserSubscribeForm, self).__init__(*args, **kwargs)
-        # self.former_followed_user.queryset = models.UserFollows.objects.filter(user=self.request_user)
+        """
+        get the connected user from the view.
+        the former followed user could have been built locally rather than from view.
+        """
+        if kwargs:
+            self.request_user = kwargs.pop("request_user")
+            self.former_followed_user = kwargs.pop("former_followed_user")
+        super(UserSubscriptionsForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = models.UserFollows
@@ -39,13 +49,9 @@ class UserSubscribeForm(ModelForm):
 
     def clean_followed_user(self):
         data = self.cleaned_data["followed_user"]
-
-        if self.request_user == data:
-            raise ValidationError("Vous ne pouvez vous suivre vous-même!", code="invalid")
-        if self.former_followed_user.filter(followed_user=data).exists():
-            raise ValidationError("Abonné déja suivi!", code="invalid")
-
-        # Always return a value to use as the new cleaned data, even if
-        # this method didn't change it.
+        if self.request_user:
+            if self.request_user == data:
+                raise ValidationError("Vous ne pouvez vous suivre vous-même!", code="invalid")
+            if self.former_followed_user.filter(followed_user=data).exists():
+                raise ValidationError("Abonné déja suivi!", code="invalid")
         return data
-

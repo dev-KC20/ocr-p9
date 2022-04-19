@@ -114,7 +114,7 @@ header {
 
 }
 
-.alert>strong {
+.errorlist {
   color: crimson;
   animation: blink 2s linear infinite;
 }

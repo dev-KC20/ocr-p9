@@ -17,10 +17,10 @@
     <ul>
         {% for post in posts%}
         <li>
-            {{post.id}}.  {{post.title}} - {{post.time_created}} <br>
+            {{post.id}}.  {{post.title}} - {{post.time_created}} by {{post.user}} <br>
             {{post.description|slice:"0:200"}} 
             {% if post.ticket %}
-            {{post.ticket}} - {{post.rating}} - {{post.headline}} by {{post.user}}
+            {{post.ticket.id}} - {{post.rating}} - {{post.headline}} 
             {% endif %}
         </li>
         {% endfor%}

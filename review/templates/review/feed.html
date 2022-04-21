@@ -17,11 +17,17 @@
     <ul>
         {% for post in posts%}
         <li>
-            {{post.id}}.  {{post.title}} - {{post.time_created}} by {{post.user}} <br>
-            {{post.description|slice:"0:200"}} 
-            {% if post.ticket %}
-            {{post.ticket.id}} - {{post.rating}} - {{post.headline}} 
+
+            {% if post.content_type == "REVIEW" %}
+            {% include 'partials/review_snippet.html' %}
             {% endif %}
+            {% if post.content_type == "TICKET" %}
+            {% include 'partials/ticket_snippet.html' %}
+            {% endif %}
+        </li>
+        {% empty %}
+        <li>
+            <p>Aucun post, veuillez créer votre premier.</p>
         </li>
         {% endfor%}
     </ul>

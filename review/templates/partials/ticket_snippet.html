@@ -1,0 +1,13 @@
+{% load static %}
+{% block content %}
+
+
+<div class="ticket-post">
+Ouvrage:
+            {{post.id}}.  {{post.title}} - {{post.time_created}} by {{post.user}} <br>
+            {{post.description}} 
+            {% if post.image %}
+                <img width="200" height="300" src="{{post.image.url}} " />
+            {% endif %}
+</div>
+{% endblock content %}

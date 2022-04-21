@@ -1,0 +1,18 @@
+{% block content %}
+
+
+<div class="review-post">
+    Critique:
+    {{post.id}}.  {{post.headline}} - {{post.time_created}} by {{post.user}} <br>
+    {{post.rating}} 
+    {{post.body}} 
+</div>
+<div class="ticket-review-post">
+    {{post.ticket.id}}.  {{post.ticket.title}} - {{post.ticket.time_created}} by {{post.ticket.user}} <br>
+    {{post.ticket.description}} 
+    {% if post.ticket.image %}
+        <img width="200" height="300" src="{{post.ticket.image.url}} " />
+    {% endif %}
+</div>
+</div>
+{% endblock content %}

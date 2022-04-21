@@ -3,7 +3,7 @@ from itertools import chain
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import CharField, Value, Q, F
+from django.db.models import CharField, Value, Q  # , F
 
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy  # reverse,
@@ -22,26 +22,23 @@ def feed(request):
     B. get my followee T+R
     C. get any R on one of my T -> with a T take all its R
 
-    sorting : date then T# with R linked
+    sorting : date, 
+    when R show T related whatever date
     """
     tickets = Ticket.objects.filter(
         Q(user__in=UserFollows.objects.filter(user=request.user).values("followed_user")) | Q(user=request.user)
     )
     tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
-    # make a django join to get the T_id for sorting.
+    # make a django join to get the T details.
     reviews = Review.objects.select_related("ticket").filter(
         Q(user__in=UserFollows.objects.filter(user=request.user).values("followed_user")) | Q(user=request.user)
     )
-    # reviews = reviews
-    for one in reviews:
-        print(one)
     reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
     # what about sorting R by T#
-    tickets = tickets.annotate(sort_id=F("pk"))
-
-    reviews = reviews.annotate(sort_id=F("ticket_id"))
+    # tickets = tickets.annotate(sort_id=F("pk"))
+    # reviews = reviews.annotate(sort_id=F("ticket_id"))
     # merge them all in one
-    posts = sorted(chain(reviews, tickets), key=lambda post: (post.sort_id, post.time_created), reverse=True)
+    posts = sorted(chain(reviews, tickets), key=lambda post: (post.time_created), reverse=True)
 
     context = {"posts": posts}
     return render(request, "review/feed.html", context=context)

@@ -30,6 +30,10 @@ class UserSubscriptionsForm(ModelForm):
 
     """
 
+    followed_user = forms.ChoiceField(
+        label="", widget=forms.TextInput(attrs={"class": "validate", "placeholder": "Nom d’utilisateur"})
+    )
+
     def __init__(self, *args, **kwargs):
         """
         get the connected user from the view.
@@ -43,9 +47,6 @@ class UserSubscriptionsForm(ModelForm):
     class Meta:
         model = models.UserFollows
         fields = ["followed_user"]
-        followed_user = forms.CharField(
-            label="", widget=forms.TextInput(attrs={"class": "validate", "placeholder": "Nom d’utilisateur"})
-        )
 
     def clean_followed_user(self):
         data = self.cleaned_data["followed_user"]

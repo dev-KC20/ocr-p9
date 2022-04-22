@@ -5,7 +5,7 @@
   box-sizing: border-box;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: medium;
-  font-variant-caps: small-caps;
+  font-variant-caps: normal;
   background-color: rgb(247, 241, 232);
   list-style-type: none;
 }
@@ -29,7 +29,7 @@ header {
 
 .navbar {
   font-size: 1em;
-
+  font-variant-caps: small-caps;
   color: black;
   /* padding: 8px 5px 8px 5px; */
   /* border: dotted 1px black; */
@@ -43,18 +43,21 @@ header {
 .navbar-welcome {
   font-size: 1.2em;
   font-weight: lighter;
+  font-variant-caps: small-caps;
 }
 
 .navbar-brand {
   font-size: 1.2em;
   font-weight: lighter;
+  font-variant-caps: small-caps;
   position: fixed;
   top: 2px;
   left: 45%;
 }
 
 .navbar-item {
-  font-size: small;
+  font-size: 1em;
+  font-variant-caps: small-caps;
   margin-left: 5px;
   float: right;
 }
@@ -82,9 +85,7 @@ header {
   margin: 5px;
 }
 
-.subscribe {
-  border: solid 1px black;
-}
+
 
 .follower {
   border: dotted 1px black;
@@ -163,19 +164,79 @@ div.col {
 }
 
 div.col:nth-child(1)>form>button {
-  /* padding: 20px; */
   display: inline-block;
+}
+
+
+.follower-item {
+  display: flex;
+  width: 90%;
+  padding: 15px;
+  margin-left: 5%;
+  border: dotted 1px grey;
+}
+
+.subscription-item {
+  display: flex;
+  margin-left: 5%;
+  width: 90%;
+  border: dotted 1px grey;
+}
+
+.follower-item>a,
+.subscription-item>a {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.subscription-item>form {
+  margin-left:auto;
+
+}
+
+.subscribe {
+  border: solid 1px black;
+}
+
+.subscribe>form {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2%;
+}
+
+.subscribe>form>p>label {
+  font-variant-caps: small-caps;
+  display: none;
+}
+
+#id_followed_user {
+  width: 90%
+}
+
+#id_followed_user>option:nth-child(1) {
+  content: "nom d'utilisateur";
+}
+
+.subscribe>form>button {
+  background-color: rgb(247, 241, 232);
+  border-color: grey;
+  padding: 5px 5px;
+  border-style: inset;
+  text-align: center;
+  text-decoration: none;
+  font-size: small;
+  font-variant-caps: small-caps;
 }
 
 .btn {
   background-color: rgb(247, 241, 232);
   border-color: grey;
-  padding: 15px 32px;
+  padding: 5px 5px;
   border-style: inset;
   text-align: center;
   text-decoration: none;
-  /* display: inline-block; */
-  font-size: 16px;
+  font-size: small;
+  font-variant-caps: small-caps;
 }
 
 .btn-like {
@@ -187,8 +248,7 @@ div.col:nth-child(1)>form>button {
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
-  /* display: inline-block; */
-  font-size: 16px;
+  font-variant-caps: small-caps;
 }
 
 .footer {
@@ -230,6 +290,21 @@ div.col:nth-child(1)>form>button {
   margin-right: auto;
 }
 
+
+.feed-button>form>button {
+  font-variant-caps: small-caps;
+}
+
+li.post>div>form>button {
+  margin-left: 80%;
+  font-variant-caps: small-caps;
+}
+
+.create-ticket>form>button {
+  margin-left: 90%;
+  font-variant-caps: small-caps;
+}
+
 .cover {
   display: block;
   margin-left: auto;
@@ -243,12 +318,12 @@ div.col:nth-child(1)>form>button {
   border: dotted 1px black;
   margin: 5px;
   padding: 5px;
-  font-variant-caps: normal;
+
 }
 
-.review-content {
+/* .review-content {
   font-variant-caps: normal;
-}
+} */
 
 .review-ww {
   font-size: medium;
@@ -274,10 +349,6 @@ div.col:nth-child(1)>form>button {
   width: 60%;
 }
 
-.create-ticket > form > button {
-  margin-left: 90%;
-
-}
 
 input#id_title,
 input#id_description,
@@ -286,7 +357,7 @@ input#id_image {
 }
 
 input#id_description {
-  display:inline-block;
-  padding:15px 10px;
-  line-height:400%;
+  display: inline-block;
+  padding: 15px 10px;
+  line-height: 400%;
 }

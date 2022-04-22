@@ -6,16 +6,16 @@
 <div class="subscribe">
     <h2>S'abonner</h2>
     <form method="post"> {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.followed_user }}
         <button type="submit" value="subscribe">Envoyer</button>
     </form>
 </div>
 
 <div class="follower">
     <h2>Abonnés</h2>
-    <ul>
+    <ul class="follower-list">
         {% for subs in form_follower %}
-        <li> <a>{{subs.user}}
+        <li class="follower-item"> <a>{{subs.user}}
 
             </a> </li>
         {% empty %}
@@ -28,9 +28,9 @@
 
 <div class="subscription">
     <h2>Abonnements</h2>
-    <ul>
+    <ul class="subscription-list">
         {% for subs in form_subscription %}
-        <li> {{subs.followed_user}} <form method="POST" action="{% url 'unsubscribe_user' pk=subs.id  %}">
+        <li class="subscription-item"> <a>{{subs.followed_user}}</a> <form method="POST" action="{% url 'unsubscribe_user' pk=subs.id  %}">
                 {% csrf_token %} <button class="btn btn-default" type="submit">Se désabonner</button> </form>
 
         </li>

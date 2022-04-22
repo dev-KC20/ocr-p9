@@ -20,6 +20,7 @@ from review.views import (
 urlpatterns = [
     path("", review.views.feed, name="feed"),
     path("feed/", review.views.feed, name="feed"),
+    path("posts/", review.views.posts, name="posts"),
     path("home/", review.views.feed, name="home"),
     # path("home/", HomeView.as_view(template_name="review/home.html"), name="home"),
     path(

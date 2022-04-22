@@ -42,6 +42,29 @@ def feed(request):
     context = {"posts": posts}
     return render(request, "review/feed.html", context=context)
 
+@login_required()
+def posts(request):
+    """
+    A. get my own T + my own R
+        sorting : date,
+    when R show T related whatever date
+    """
+    # make a django join==select_related to get the R + T details for followees or myself
+    reviews = Review.objects.select_related("ticket").filter(
+        Q(user=request.user)
+    )
+    reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
+    # ticket w/o reviews
+    tickets = Ticket.objects.filter(
+         Q(user=request.user)
+    ).exclude(id__in=reviews.values("ticket_id"))
+    tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
+    # print(tickets.query)
+    # prepare the mixed posts
+    posts = sorted(chain(reviews, tickets), key=lambda post: (post.time_created), reverse=True)
+    context = {"posts": posts}
+    return render(request, "review/feed.html", context=context)
+
 
 class HomeView(LoginRequiredMixin, ListView):
     model = Ticket
@@ -58,7 +81,7 @@ class TicketCreateView(CreateView, LoginRequiredMixin):
     model = Ticket
     form_class = TicketForm
     template_name = "review/create_ticket.html"
-    success_url = "/home"
+    success_url = "/feed"
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -99,12 +122,48 @@ class ReviewCreateView(CreateView, LoginRequiredMixin):
 class ReviewCreateFullView(CreateView, LoginRequiredMixin):
     model = Review
     fields = "__all__"
-    template_name = "review/create_review.html"
-    success_url = "/home"
+    template_name = "review/create_full_review.html"
+    success_url = "/feed"
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    def get(self, request):
+        """provide the 2 inputs to ticket & review"""
+        form_ticket = TicketForm()
+        form_review = ReviewCreateForm()
+
+        context = {
+            "form_ticket": form_ticket,
+            "form_review": form_review,
+        }
+        return render((request), self.template_name, context=context)
+
+    def post(self, request):
+        """manage review then save ticket and review"""
+
+        form_ticket = TicketForm(request.POST, request.FILES)
+        form_review = ReviewCreateForm(request.POST)
+        # if form_ticket.is_valid() and not(form_review.is_valid()):
+        #     title = form_ticket.cleaned_data.get("title")
+        #     description = form_ticket.cleaned_data.get("decription")
+        #     user = request.user
+        #     image = form_ticket.cleaned_data.get("image")
+        #     ticket_to_review = Ticket.objects.create(title=title, description=description, user=user, image=image)
+        if all([form_ticket.is_valid(), form_review.is_valid()]):
+            title = form_ticket.cleaned_data.get("title")
+            description = form_ticket.cleaned_data.get("description")
+            user = request.user
+            image = form_ticket.cleaned_data.get("image")
+            ticket_to_review = Ticket.objects.create(title=title, description=description, user=user, image=image)
+
+            rating = form_review.cleaned_data.get("rating")
+            headline = form_review.cleaned_data.get("headline")
+            body = form_review.cleaned_data.get("body")
+            Review.objects.create(ticket=ticket_to_review, rating=rating, user=request.user, headline=headline, body=body)
+            return redirect("feed")
+        context = {
+            "form_ticket": form_ticket,
+            "form_review": form_review,
+        }
+        return render((request), self.template_name, context=context)
 
 
 class TicketUpdateView(UpdateView, LoginRequiredMixin):

@@ -263,3 +263,30 @@ div.col:nth-child(1)>form>button {
 .star-icon {
   width: 5%;
 }
+
+.create-ticket {
+  border: dotted 1px grey;
+  margin: 5px;
+  padding: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+}
+
+.create-ticket > form > button {
+  margin-left: 90%;
+
+}
+
+input#id_title,
+input#id_description,
+input#id_image {
+  width: calc(100% - 40px);
+}
+
+input#id_description {
+  display:inline-block;
+  padding:15px 10px;
+  line-height:400%;
+}

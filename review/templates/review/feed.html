@@ -16,7 +16,7 @@
 
     <ul>
         {% for post in posts%}
-        <li>
+        <li class="post">
 
             {% if post.content_type == "REVIEW" %}
             {% include 'partials/review_snippet.html' %}

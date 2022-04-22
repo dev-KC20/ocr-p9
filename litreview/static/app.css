@@ -3,8 +3,9 @@
   margin: 5px;
   padding: 0;
   box-sizing: border-box;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: large;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: medium;
+  font-variant-caps: small-caps;
   background-color: rgb(247, 241, 232);
 }
 
@@ -27,7 +28,7 @@ header {
 
 .navbar {
   font-size: 1em;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
   color: black;
   /* padding: 8px 5px 8px 5px; */
   /* border: dotted 1px black; */
@@ -53,7 +54,6 @@ header {
 
 .navbar-item {
   font-size: small;
-  font-variant: small-caps;
   margin-left: 5px;
   float: right;
 }
@@ -63,7 +63,6 @@ header {
 .main {
   /* height: 100%; */
   padding: 5px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .main {
@@ -200,10 +199,51 @@ div.col:nth-child(1)>form>button {
 }
 
 .footer p {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
   font-size: small;
   color: darkgrey;
   /* background-color: lightslategray; */
   text-align: center;
   padding: 8px 5px 8px 5px;
+}
+
+
+.post {
+  border: solid 1px black;
+  margin: 5px;
+  padding: 5px;
+}
+
+.cover {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}
+
+.ticket-post,
+.ticket-review-post,
+.review-post {
+  border: dotted 1px black;
+  margin: 5px;
+  padding: 5px;
+  font-variant-caps: normal;
+}
+
+.review-content {
+  font-variant-caps: normal;
+}
+
+.review-ww {
+  font-size: medium;
+  color: darkgrey;
+  text-align: right;
+}
+
+#stars.mb-2.text-xs {
+  margin-left: 40%;
+}
+
+.star-icon {
+  width: 5%;
 }

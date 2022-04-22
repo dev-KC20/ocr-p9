@@ -1,13 +1,18 @@
 {% load static %}
 {% block content %}
 
-
+{% if post.user == request.user %} Vous avez {% else%} {{post.user}} a {% endif %} demandé une critique:
 <div class="ticket-post">
-Ouvrage:
-            {{post.id}}.  {{post.title}} - {{post.time_created}} by {{post.user}} <br>
-            {{post.description}} 
-            {% if post.image %}
-                <img width="200" height="300" src="{{post.image.url}} " />
-            {% endif %}
+    {{post.id}}.  {{post.title}} 
+    <div class="review-ww"> 
+        le {{post.time_created}} 
+    </div>
+    {{post.description}} 
+
+    {% if post.image %}
+    <div class="cover">
+        <img  src="{{post.image.url}} " />
+    </div>
+    {% endif %}
 </div>
-{% endblock content %}
+{% endblock content %}        

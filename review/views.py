@@ -22,24 +22,22 @@ def feed(request):
     B. get my followee T+R
     C. get any R on one of my T -> with a T take all its R
 
-    sorting : date, 
+    sorting : date,
     when R show T related whatever date
     """
-    tickets = Ticket.objects.filter(
-        Q(user__in=UserFollows.objects.filter(user=request.user).values("followed_user")) | Q(user=request.user)
-    )
-    tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
-    # make a django join to get the T details.
+    # make a django join==select_related to get the R + T details for followees or myself
     reviews = Review.objects.select_related("ticket").filter(
         Q(user__in=UserFollows.objects.filter(user=request.user).values("followed_user")) | Q(user=request.user)
     )
     reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
-    # what about sorting R by T#
-    # tickets = tickets.annotate(sort_id=F("pk"))
-    # reviews = reviews.annotate(sort_id=F("ticket_id"))
-    # merge them all in one
+    # ticket w/o reviews
+    tickets = Ticket.objects.filter(
+        Q(user__in=UserFollows.objects.filter(user=request.user).values("followed_user")) | Q(user=request.user)
+    ).exclude(id__in=reviews.values('ticket_id'))
+    print(tickets.query)
+    tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
+    # prepare the mixed posts
     posts = sorted(chain(reviews, tickets), key=lambda post: (post.time_created), reverse=True)
-
     context = {"posts": posts}
     return render(request, "review/feed.html", context=context)
 

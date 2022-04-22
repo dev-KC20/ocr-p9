@@ -11,6 +11,7 @@ from review.views import (
     TicketCreateView,
     TicketUpdateView,
     ReviewCreateView,
+    ReviewCreateFullView,
     UserUnsubscribeView,
     UserSubscriptionsView,
 )
@@ -27,9 +28,14 @@ urlpatterns = [
         name="create_ticket",
     ),
     path(
-        "create-review/",
+        "<int:pk>/create-review/",
         ReviewCreateView.as_view(),
         name="create_review",
+    ),
+    path(
+        "create-full-review/",
+        ReviewCreateFullView.as_view(),
+        name="create_full_review",
     ),
     path(
         "<int:pk>/update/",

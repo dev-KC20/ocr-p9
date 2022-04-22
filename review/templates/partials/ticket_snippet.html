@@ -14,5 +14,8 @@
         <img  src="{{post.image.url}} " />
     </div>
     {% endif %}
+   
+    <form method="POST" action="{% url 'create_review' post.id  %}">
+        {% csrf_token %} <button class="btn btn-default" type="submit">Créer une critique</button> </form>
 </div>
 {% endblock content %}        

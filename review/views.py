@@ -6,12 +6,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import CharField, Value, Q  # , F
 
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy  # reverse,
 
 from django.views.generic import DetailView, ListView  # TemplateView,
 from django.views.generic.edit import CreateView, DeleteView, UpdateView  # , FormView
 
-from review.forms import TicketForm, UserSubscriptionsForm
+from review.forms import TicketForm, UserSubscriptionsForm, ReviewCreateForm
 from review.models import Review, Ticket, UserFollows
 
 
@@ -33,9 +34,9 @@ def feed(request):
     # ticket w/o reviews
     tickets = Ticket.objects.filter(
         Q(user__in=UserFollows.objects.filter(user=request.user).values("followed_user")) | Q(user=request.user)
-    ).exclude(id__in=reviews.values('ticket_id'))
-    print(tickets.query)
+    ).exclude(id__in=reviews.values("ticket_id"))
     tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
+    # print(tickets.query)
     # prepare the mixed posts
     posts = sorted(chain(reviews, tickets), key=lambda post: (post.time_created), reverse=True)
     context = {"posts": posts}
@@ -65,6 +66,37 @@ class TicketCreateView(CreateView, LoginRequiredMixin):
 
 
 class ReviewCreateView(CreateView, LoginRequiredMixin):
+    model = Review
+    form_class = ReviewCreateForm
+    template_name = "review/create_review.html"
+    success_url = "/feed"
+    pk_url_kwarg = "pk"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.user = self.request.user
+        if self.kwargs.get("pk"):
+            self.related_ticket_id = self.kwargs.get("pk")
+        return super(ReviewCreateView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request, pk):
+        """manage review then save subcribed user"""
+
+        form = self.form_class(request.POST, self.related_ticket_id)
+
+        if form.is_valid():
+            related_ticket = get_object_or_404(Ticket, id=self.related_ticket_id)
+            rating = form.cleaned_data.get("rating")
+            headline = form.cleaned_data.get("headline")
+            body = form.cleaned_data.get("body")
+            Review.objects.create(ticket=related_ticket, rating=rating, user=self.user, headline=headline, body=body)
+            return redirect("feed")
+        context = {
+            "form": form,
+        }
+        return render((request), self.template_name, context=context)
+
+
+class ReviewCreateFullView(CreateView, LoginRequiredMixin):
     model = Review
     fields = "__all__"
     template_name = "review/create_review.html"

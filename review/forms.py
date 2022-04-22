@@ -55,3 +55,21 @@ class UserSubscriptionsForm(ModelForm):
             if self.former_followed_user.filter(followed_user=data).exists():
                 raise ValidationError("Abonné déja suivi!", code="invalid")
         return data
+
+
+class ReviewCreateForm(ModelForm):
+    """ """
+
+    # def __init__(self, *args, **kwargs):
+    #     """
+    #     get the connected user from the view.
+    #     the former followed user could have been built locally rather than from view.
+    #     """
+    #     if "request_user" in kwargs:
+    #         self.request_user = kwargs["request_user"]
+    #         self.related_ticket = kwargs["related_ticket"]
+    #     super(ReviewCreateForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = models.Review
+        fields = ["rating", "headline", "body"]

@@ -207,6 +207,11 @@ div.col:nth-child(1)>form>button {
   padding: 8px 5px 8px 5px;
 }
 
+.post-list {
+
+  width: 80%;
+  margin-left: 10%;
+}
 
 .post {
   border: solid 1px black;

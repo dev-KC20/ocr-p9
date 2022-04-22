@@ -2,17 +2,15 @@
 {% load static %}
 {% block content %}
 
-<h1> Bienvenue lecteur !</h1>
 <div class="post-list">
-    <h2>Demande d'avis</h2>
-    
-    <form method="GET"  action="{% url 'create_ticket' %}">
-        <button  class="btn btn-default" type="submit">Demander une critique</button>
-    </form>
-    
-    <form method="GET"  action="{% url 'create_full_review' %}">
-        <button  class="btn btn-default" type="submit">Créer une critique</button>
-    </form>
+    <div class="feed-button">
+        <form method="GET"  action="{% url 'create_ticket' %}">
+            <button  class="btn btn-default" type="submit">Demander une critique</button>
+        </form>
+        <form method="GET"  action="{% url 'create_full_review' %}">
+            <button  class="btn btn-default" type="submit">Créer une critique</button>
+        </form>
+    </div>
 
     <ul>
         {% for post in posts%}

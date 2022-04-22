@@ -7,6 +7,7 @@
   font-size: medium;
   font-variant-caps: small-caps;
   background-color: rgb(247, 241, 232);
+  list-style-type: none;
 }
 
 /* Navbar mobile inspired by Adam Nagy javascript academy */
@@ -173,7 +174,7 @@ div.col:nth-child(1)>form>button {
   border-style: inset;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  /* display: inline-block; */
   font-size: 16px;
 }
 
@@ -186,7 +187,7 @@ div.col:nth-child(1)>form>button {
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  /* display: inline-block; */
   font-size: 16px;
 }
 
@@ -217,6 +218,16 @@ div.col:nth-child(1)>form>button {
   border: solid 1px black;
   margin: 5px;
   padding: 5px;
+}
+
+.feed-button {
+  display: flex;
+  justify-content: center;
+}
+
+.feed-button>form {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cover {

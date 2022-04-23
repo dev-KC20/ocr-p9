@@ -177,16 +177,16 @@ class TicketUpdateView(UpdateView, LoginRequiredMixin):
     success_url = "/posts"
     pk_url_kwarg = "pk"
 
-    def get_initial(self):
-        self.initial = super().get_initial()
-        self.initial["title"] = self.object.title
-        self.initial["description"] = self.object.description
-        self.initial["image"] = self.object.image
-        return self.initial
+    # def get_initial(self):
+    #     self.initial = super().get_initial()
+    #     self.initial["title"] = self.object.title
+    #     self.initial["description"] = self.object.description
+    #     self.initial["image"] = self.object.image
+    #     return self.initial
     
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.instance.user = self.request.user
+    #     return super().form_valid(form)
 
 
 class UserUnsubscribeView(DeleteView, LoginRequiredMixin):

@@ -167,11 +167,23 @@ class ReviewCreateFullView(CreateView, LoginRequiredMixin):
 
 
 class TicketUpdateView(UpdateView, LoginRequiredMixin):
-    model = Ticket
-    form_class = TicketForm
-    template_name = "review/update_ticket.html"
-    success_url = "/home"
+    # needed to initiate the form with the value from the object
+    # initial = {}
 
+    model = Ticket
+    fields = ["title", "description", "image"]
+    # form_class = TicketForm
+    template_name = "review/update_ticket.html"
+    success_url = "/posts"
+    pk_url_kwarg = "pk"
+
+    def get_initial(self):
+        self.initial = super().get_initial()
+        self.initial["title"] = self.object.title
+        self.initial["description"] = self.object.description
+        self.initial["image"] = self.object.image
+        return self.initial
+    
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)

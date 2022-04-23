@@ -14,8 +14,15 @@
         <img  src="{{post.image.url}} " />
     </div>
     {% endif %}
-   
+    <div class="action-button">
+    {% if request.get_full_path == "/review/feed/" %}
     <form method="POST" action="{% url 'create_review' post.id  %}">
         {% csrf_token %} <button class="btn btn-default" type="submit">Créer une critique</button> </form>
+    {% endif %}
+    {% if request.get_full_path == "/review/posts/" %}
+    <form method="POST" action="{% url 'update_ticket' post.id  %}">
+        {% csrf_token %} <button class="btn btn-default" type="submit"  value="Update">MàJ votre demande</button> </form>
+    {% endif %}
+    </div>
 </div>
 {% endblock content %}        

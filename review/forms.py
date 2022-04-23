@@ -8,13 +8,28 @@ from django import forms
 
 
 class TicketForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        """
+        get the connected user from the view.
+        the former followed user could have been built locally rather than from view.
+        """
+        super(TicketForm, self).__init__(*args, **kwargs)
+        # if self.instance:
+        if kwargs['instance']:
+            self.fields['title'] = kwargs['instance'].title
+            self.fields['description'] = kwargs['instance'].description
+            # self.fields['title']  = kwargs['instance'].title
+            # self.fields['description']  = kwargs['instance'].description
+            # self.fields['image']  = kwargs['instance'].image
+
     class Meta:
         model = models.Ticket
         fields = ["title", "description", "image"]
 
-    title = forms.CharField(label="Titre", label_suffix="")
-    description = forms.CharField(max_length=2048, label_suffix="")
-    image = forms.ImageField(label_suffix="")
+    # title = forms.CharField(label="Titre", label_suffix="")
+    # description = forms.CharField(max_length=2048, label_suffix="")
+    # image = forms.ImageField(label_suffix="")
 
 
 class ReviewForm(ModelForm):

@@ -8,7 +8,6 @@ from django.db.models import CharField, Value, Q  # , F
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy  # reverse,
-from django.http import HttpResponseForbidden
 
 from django.views.generic import DetailView, ListView  # TemplateView,
 from django.views.generic.edit import CreateView, DeleteView, UpdateView  # , FormView
@@ -199,38 +198,22 @@ class TicketDeleteView(DeleteView, LoginRequiredMixin):
 class ReviewUpdateView(UpdateView, LoginRequiredMixin):
 
     model = Review
-    fields = "__all__"
-    template_name = "review/create_full_review.html"
+    # fields = "__all__"
+    template_name = "review/review_full_update.html"
     pk_url_kwarg = "pk"
     success_url = reverse_lazy("posts")
     success_message = "La critique a été modifiée."
+    form_ticket = TicketForm
+    form_class = ReviewCreateForm
 
     def get_success_url(self):
         messages.success(self.request, self.success_message)
         return reverse_lazy("posts")
 
-    def get(self, request):
-        """provide the 2 inputs to ticket & review"""
-        form_ticket = TicketForm()
-        form_review = ReviewCreateForm()
-
-        context = {
-            "form_ticket": form_ticket,
-            "form_review": form_review,
-        }
-        return super.get()
-
-    def post(self, request):
-        """manage review then save ticket and review"""
-
-        form_ticket = TicketForm(request.POST, request.FILES)
-        form_review = ReviewCreateForm(request.POST)
-
-        context = {
-            "form_ticket": form_ticket,
-            "form_review": form_review,
-        }
-        return render((request), self.template_name, context=context)
+    # def get_context_data(self, **kwargs):
+    #     if self.object:
+    #         self.form_ticket(instance=self.object.ticket)
+    #     return super(ReviewUpdateView, self).get_context_data(**kwargs)
 
 
 class UserUnsubscribeView(DeleteView, LoginRequiredMixin):

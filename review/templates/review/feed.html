@@ -3,6 +3,7 @@
 {% block content %}
 
 <div class="post-list">
+    {% if request.get_full_path == "/review/feed/" %}
     <div class="feed-button">
         <form method="GET"  action="{% url 'create_ticket' %}">
             <button  class="btn btn-default" type="submit">Demander une critique</button>
@@ -11,6 +12,7 @@
             <button  class="btn btn-default" type="submit">Créer une critique</button>
         </form>
     </div>
+    {% endif %}
 
     <ul>
         {% for post in posts%}

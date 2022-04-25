@@ -8,6 +8,7 @@ from django.db.models import CharField, Value, Q  # , F
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy  # reverse,
+from django.http import HttpResponseForbidden
 
 from django.views.generic import DetailView, ListView  # TemplateView,
 from django.views.generic.edit import CreateView, DeleteView, UpdateView  # , FormView
@@ -71,7 +72,7 @@ class HomeView(LoginRequiredMixin, ListView):
 
 class TicketDetailView(DetailView, LoginRequiredMixin):
     model = Ticket
-    template_name = "review/show_ticket.html"
+    template_name = "review/ticket_show.html"
 
 
 class TicketCreateView(CreateView, LoginRequiredMixin):
@@ -88,7 +89,7 @@ class TicketCreateView(CreateView, LoginRequiredMixin):
 class ReviewCreateView(CreateView, LoginRequiredMixin):
     model = Review
     form_class = ReviewCreateForm
-    template_name = "review/create_review.html"
+    template_name = "review/review_create.html"
     success_url = "/feed"
     pk_url_kwarg = "pk"
 
@@ -179,9 +180,8 @@ class TicketDeleteView(DeleteView, LoginRequiredMixin):
     model = Ticket
     success_url = reverse_lazy("posts")
     success_message = "Le ticket a été supprimé."
-    fields = ["title", "description", "image"]
+    error_message = "Cette demande comporte des critiques. Supprimez-les d'abord."
     template_name = "review/ticket_delete.html"
-    success_url = reverse_lazy("posts")
     pk_url_kwarg = "pk"
 
     def get_success_url(self):
@@ -189,9 +189,48 @@ class TicketDeleteView(DeleteView, LoginRequiredMixin):
         return reverse_lazy("posts")
 
     def form_valid(self, form):
-        if Review.objects.filter(ticket=self.pk).exists():
-            raise Exception("Cette demande comporte des critiques. Supprimez-les d'abord.")
-        return super().form_valid(form)
+        if Review.objects.filter(ticket=self.object.id).exists():
+            messages.error(self.request, self.error_message)
+            return redirect("ticket_show", self.object.id, self.error_message)
+            # return HttpResponseForbidden(self.error_message)
+        return super(TicketDeleteView, self).form_valid(form)
+
+
+class ReviewUpdateView(UpdateView, LoginRequiredMixin):
+
+    model = Review
+    fields = "__all__"
+    template_name = "review/create_full_review.html"
+    pk_url_kwarg = "pk"
+    success_url = reverse_lazy("posts")
+    success_message = "La critique a été modifiée."
+
+    def get_success_url(self):
+        messages.success(self.request, self.success_message)
+        return reverse_lazy("posts")
+
+    def get(self, request):
+        """provide the 2 inputs to ticket & review"""
+        form_ticket = TicketForm()
+        form_review = ReviewCreateForm()
+
+        context = {
+            "form_ticket": form_ticket,
+            "form_review": form_review,
+        }
+        return super.get()
+
+    def post(self, request):
+        """manage review then save ticket and review"""
+
+        form_ticket = TicketForm(request.POST, request.FILES)
+        form_review = ReviewCreateForm(request.POST)
+
+        context = {
+            "form_ticket": form_ticket,
+            "form_review": form_review,
+        }
+        return render((request), self.template_name, context=context)
 
 
 class UserUnsubscribeView(DeleteView, LoginRequiredMixin):

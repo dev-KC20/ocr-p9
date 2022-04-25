@@ -10,6 +10,7 @@ from review.views import (
     TicketDetailView,
     TicketCreateView,
     TicketUpdateView,
+    TicketDeleteView,
     ReviewCreateView,
     ReviewCreateFullView,
     UserUnsubscribeView,
@@ -41,7 +42,12 @@ urlpatterns = [
     path(
         "<int:pk>/update/",
         TicketUpdateView.as_view(),
-        name="update_ticket",
+        name="ticket_update",
+    ),
+    path(
+        "<int:pk>/delete/",
+        TicketDeleteView.as_view(),
+        name="ticket_delete",
     ),
     path(
         "<int:pk>/view/",

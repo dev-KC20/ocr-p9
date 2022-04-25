@@ -42,6 +42,7 @@ def feed(request):
     context = {"posts": posts}
     return render(request, "review/feed.html", context=context)
 
+
 @login_required()
 def posts(request):
     """
@@ -50,14 +51,10 @@ def posts(request):
     when R show T related whatever date
     """
     # make a django join==select_related to get the R + T details for followees or myself
-    reviews = Review.objects.select_related("ticket").filter(
-        Q(user=request.user)
-    )
+    reviews = Review.objects.select_related("ticket").filter(Q(user=request.user))
     reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
     # ticket w/o reviews
-    tickets = Ticket.objects.filter(
-         Q(user=request.user)
-    ).exclude(id__in=reviews.values("ticket_id"))
+    tickets = Ticket.objects.filter(Q(user=request.user)).exclude(id__in=reviews.values("ticket_id"))
     tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
     # print(tickets.query)
     # prepare the mixed posts
@@ -141,12 +138,7 @@ class ReviewCreateFullView(CreateView, LoginRequiredMixin):
 
         form_ticket = TicketForm(request.POST, request.FILES)
         form_review = ReviewCreateForm(request.POST)
-        # if form_ticket.is_valid() and not(form_review.is_valid()):
-        #     title = form_ticket.cleaned_data.get("title")
-        #     description = form_ticket.cleaned_data.get("decription")
-        #     user = request.user
-        #     image = form_ticket.cleaned_data.get("image")
-        #     ticket_to_review = Ticket.objects.create(title=title, description=description, user=user, image=image)
+
         if all([form_ticket.is_valid(), form_review.is_valid()]):
             title = form_ticket.cleaned_data.get("title")
             description = form_ticket.cleaned_data.get("description")
@@ -157,7 +149,9 @@ class ReviewCreateFullView(CreateView, LoginRequiredMixin):
             rating = form_review.cleaned_data.get("rating")
             headline = form_review.cleaned_data.get("headline")
             body = form_review.cleaned_data.get("body")
-            Review.objects.create(ticket=ticket_to_review, rating=rating, user=request.user, headline=headline, body=body)
+            Review.objects.create(
+                ticket=ticket_to_review, rating=rating, user=request.user, headline=headline, body=body
+            )
             return redirect("feed")
         context = {
             "form_ticket": form_ticket,
@@ -167,26 +161,37 @@ class ReviewCreateFullView(CreateView, LoginRequiredMixin):
 
 
 class TicketUpdateView(UpdateView, LoginRequiredMixin):
-    # needed to initiate the form with the value from the object
-    # initial = {}
 
     model = Ticket
     fields = ["title", "description", "image"]
-    # form_class = TicketForm
-    template_name = "review/update_ticket.html"
-    success_url = "/posts"
+    template_name = "review/ticket_update.html"
+    pk_url_kwarg = "pk"
+    success_url = reverse_lazy("posts")
+    success_message = "Le ticket a été modifié."
+
+    def get_success_url(self):
+        messages.success(self.request, self.success_message)
+        return reverse_lazy("posts")
+
+
+class TicketDeleteView(DeleteView, LoginRequiredMixin):
+
+    model = Ticket
+    success_url = reverse_lazy("posts")
+    success_message = "Le ticket a été supprimé."
+    fields = ["title", "description", "image"]
+    template_name = "review/ticket_delete.html"
+    success_url = reverse_lazy("posts")
     pk_url_kwarg = "pk"
 
-    # def get_initial(self):
-    #     self.initial = super().get_initial()
-    #     self.initial["title"] = self.object.title
-    #     self.initial["description"] = self.object.description
-    #     self.initial["image"] = self.object.image
-    #     return self.initial
-    
-    # def form_valid(self, form):
-    #     form.instance.user = self.request.user
-    #     return super().form_valid(form)
+    def get_success_url(self):
+        messages.success(self.request, self.success_message)
+        return reverse_lazy("posts")
+
+    def form_valid(self, form):
+        if Review.objects.filter(ticket=self.pk).exists():
+            raise Exception("Cette demande comporte des critiques. Supprimez-les d'abord.")
+        return super().form_valid(form)
 
 
 class UserUnsubscribeView(DeleteView, LoginRequiredMixin):

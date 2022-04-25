@@ -115,6 +115,18 @@ header {
 
 }
 
+#id_rating {
+  display: flex;
+  margin-left: 5%;
+  width: 90%;
+}
+
+#id_rating>div>label {
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .errorlist {
   color: crimson;
   animation: blink 2s linear infinite;
@@ -190,7 +202,7 @@ div.col:nth-child(1)>form>button {
 }
 
 .subscription-item>form {
-  margin-left:auto;
+  margin-left: auto;
 
 }
 
@@ -280,17 +292,20 @@ div.col:nth-child(1)>form>button {
   padding: 5px;
 }
 
+.action-button,
 .feed-button {
   display: flex;
   justify-content: center;
 }
 
+.action-button,
 .feed-button>form {
   margin-left: auto;
   margin-right: auto;
 }
 
 
+.action-button,
 .feed-button>form>button {
   font-variant-caps: small-caps;
 }
@@ -300,6 +315,7 @@ li.post>div>form>button {
   font-variant-caps: small-caps;
 }
 
+.create-review>form>button,
 .create-ticket>form>button {
   margin-left: 90%;
   font-variant-caps: small-caps;
@@ -339,6 +355,7 @@ li.post>div>form>button {
   width: 5%;
 }
 
+.create-review,
 .create-ticket {
   border: dotted 1px grey;
   margin: 5px;
@@ -351,11 +368,14 @@ li.post>div>form>button {
 
 
 input#id_title,
+input#id_headline,
+input#id_body,
 input#id_description,
 input#id_image {
   width: calc(100% - 40px);
 }
 
+input#id_body,
 input#id_description {
   display: inline-block;
   padding: 15px 10px;

@@ -40,12 +40,12 @@ Ouvrage:
 
 <div class="action-button">
 
-    {% if request.path == "/review/feed/" %}
+    {% if request.path == "/never-in-review/feed/" %}
     <form method="POST" action="{% url 'create_review' post.ticket.id  %}">
         {% csrf_token %} <button class="btn btn-default" type="submit">Créer une critique</button> </form>
     {% endif %}
-    {% if request.get_full_path == "/review/posts/" %}
-    <form method="POST" action="{% url 'update_ticket' post.ticket.id  %}">
+    {% if request.get_full_path == "/never-in-review/posts/" %}
+    <form method="POST" action="{% url 'ticket_update' post.ticket.id  %}">
         {% csrf_token %} <button class="btn btn-default" type="submit">MàJ votre demande</button> </form>
     {% endif %}
     </div>

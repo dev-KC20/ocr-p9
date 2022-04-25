@@ -14,15 +14,16 @@
         <img  src="{{post.image.url}} " />
     </div>
     {% endif %}
-    <div class="action-button">
-    {% if request.get_full_path == "/review/feed/" %}
-    <form method="POST" action="{% url 'create_review' post.id  %}">
-        {% csrf_token %} <button class="btn btn-default" type="submit">Créer une critique</button> </form>
-    {% endif %}
     {% if request.get_full_path == "/review/posts/" %}
-    <form method="POST" action="{% url 'update_ticket' post.id  %}">
-        {% csrf_token %} <button class="btn btn-default" type="submit"  value="Update">MàJ votre demande</button> </form>
-    {% endif %}
+    <div class="action-button">
+        <form method="GET" action="{% url 'ticket_delete' post.id  %}">
+            <button class="btn btn-default" type="submit">Supprimer votre demande</button> 
+        </form>
+        
+        <form method="GET" action="{% url 'ticket_update' post.id  %}">
+            <button class="btn btn-default" type="submit"  value="Update">Modifier votre demande</button> 
+        </form>
     </div>
+{% endif %}
 </div>
 {% endblock content %}        

@@ -3,6 +3,7 @@
 <div class="col">
     <h2 >Inscrivez-vous maintenant !</h2>
     <form method="GET"  action="{% url 'signup' %}">
+        {% csrf_token %} 
         <button  class="btn btn-default" type="submit">S'inscrire</button>
     </form>
     

@@ -77,7 +77,7 @@ class TicketDetailView(DetailView, LoginRequiredMixin):
 class TicketCreateView(CreateView, LoginRequiredMixin):
     model = Ticket
     form_class = TicketForm
-    template_name = "review/create_ticket.html"
+    template_name = "review/ticket_create.html"
     success_url = "/feed"
 
     def form_valid(self, form):
@@ -96,22 +96,32 @@ class ReviewCreateView(CreateView, LoginRequiredMixin):
         self.user = self.request.user
         if self.kwargs.get("pk"):
             self.related_ticket_id = self.kwargs.get("pk")
+            self.related_ticket = get_object_or_404(Ticket, id=self.related_ticket_id)
         return super(ReviewCreateView, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, pk):
+        """ """
+        form = self.form_class()
+        context = {
+            "form": form,
+            "related_ticket": self.related_ticket,
+        }
+        return render((request), self.template_name, context=context)
 
     def post(self, request, pk):
         """manage review then save subcribed user"""
 
-        form = self.form_class(request.POST, self.related_ticket_id)
+        form = self.form_class(request.POST, request.FILES)
 
         if form.is_valid():
-            related_ticket = get_object_or_404(Ticket, id=self.related_ticket_id)
             rating = form.cleaned_data.get("rating")
             headline = form.cleaned_data.get("headline")
             body = form.cleaned_data.get("body")
-            Review.objects.create(ticket=related_ticket, rating=rating, user=self.user, headline=headline, body=body)
+            Review.objects.create(ticket=self.related_ticket, rating=rating, user=self.user, headline=headline, body=body)
             return redirect("feed")
         context = {
             "form": form,
+            "related_ticket": self.related_ticket,
         }
         return render((request), self.template_name, context=context)
 
@@ -119,7 +129,7 @@ class ReviewCreateView(CreateView, LoginRequiredMixin):
 class ReviewCreateFullView(CreateView, LoginRequiredMixin):
     model = Review
     fields = "__all__"
-    template_name = "review/create_full_review.html"
+    template_name = "review/review_full_create.html"
     success_url = "/feed"
 
     def get(self, request):
@@ -210,10 +220,25 @@ class ReviewUpdateView(UpdateView, LoginRequiredMixin):
         messages.success(self.request, self.success_message)
         return reverse_lazy("posts")
 
-    # def get_context_data(self, **kwargs):
-    #     if self.object:
-    #         self.form_ticket(instance=self.object.ticket)
-    #     return super(ReviewUpdateView, self).get_context_data(**kwargs)
+
+class ReviewDeleteView(DeleteView, LoginRequiredMixin):
+
+    model = Review
+    # fields = "__all__"
+    # template_name = "review/review_full_delete.html"
+    pk_url_kwarg = "pk"
+    success_url = reverse_lazy("posts")
+    success_message = "La critique a été supprimée."
+    form_ticket = TicketForm
+    # form_class = ReviewCreateForm
+
+    def get_success_url(self):
+        messages.success(self.request, self.success_message)
+        return reverse_lazy("posts")
+
+    # def form_valid(self, form):
+    #     messages.error(self.request, self.error_message)
+    #     return super(ReviewDeleteView, self).form_valid(form)
 
 
 class UserUnsubscribeView(DeleteView, LoginRequiredMixin):

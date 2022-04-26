@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="create-ticket">
+    <h2>Pour mémoire, l'ouvrage</h2>
+    <h3> {{ object.ticket.title }} </h3>
+    
+    <p>
+        {{ object..ticket.description }}
+    </p>
+    {{ object.ticket.user }}
+    {{ object.ticket.time_created}}
+    
+    {% if object.ticket.image %}
+    <img src="{{object.ticket.image.url}}" width = "100" height = "100">
+    {% endif %}
+    
+</div>
+
+<div class="create-review">
+    {% csrf_token %}
+    <h2>La critique à supprimer {{ object.id }}</h2>
+    {{ object.headline }}
+    {{ object.body }}
+    {{ object.rating }}
+    
+    <form method="post">{% csrf_token %}
+        <p>Confirmez la suppression de la critique.</p>
+        {{ form }}
+        <input type="submit" value="Confirm">
+    </form>
+</div>
+    
+{% endblock content %}

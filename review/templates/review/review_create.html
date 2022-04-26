@@ -1,11 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <h2>Créer une critique</h2>
-    <form method="post" >
-        {{ form.as_p }}
+<form method="POST" enctype="multipart/form-data">
+    <div class="create-ticket">
+        <h2>Pour mémoire, l'ouvrage {{related_ticket.id}}</h2>
+        <h3> {{ related_ticket.title }} </h3>
+        <p> {{ related_ticket.description }} </p>
+        {{ related_ticket.user }}
+        {{ related_ticket.time_created }}
+
+        {% if related_ticket.image %}
+        <img src="{{related_ticket.image.url}}" width="100" height="100">
+        {% endif %}
+    </div>
+
+    <div class="create-review">
+        <h2>Créer une critique</h2>
+        {{ form }}
         {% csrf_token %}
-        <button type="submit" >Envoyer</button>
-    </form>
+        <button type="submit">Envoyer</button>
+</form>
+</div>
 
 {% endblock content %}

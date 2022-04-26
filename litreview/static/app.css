@@ -298,13 +298,16 @@ div.col:nth-child(1)>form>button {
   justify-content: center;
 }
 
-.action-button,
 .feed-button>form {
   margin-left: auto;
   margin-right: auto;
 }
+.action-button  {
+  margin-left: 60%;
+width: max-content;
+}
 
-
+/* li.post: > div > div > form > button */
 .action-button,
 .feed-button>form>button {
   font-variant-caps: small-caps;

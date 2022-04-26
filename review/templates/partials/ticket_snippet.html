@@ -19,7 +19,6 @@
         <form method="GET" action="{% url 'review_create' post.id  %}">
             <button class="btn btn-default" type="submit">Créer une critique</button> 
         </form>
-        
     </div>
     {% endif %}
     {% if request.get_full_path == "/review/posts/" %}

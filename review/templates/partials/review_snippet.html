@@ -42,19 +42,23 @@ Ouvrage:
 
     {% if request.path == "/never-in-review/feed/" %}
     <form method="GET" action="{% url 'review_create' post.ticket.id  %}">
-        {% csrf_token %} <button class="btn btn-default" type="submit">Créer une critique</button> </form>
+        {% csrf_token %} 
+        <button class="btn btn-default" type="submit">Créer une critique</button> 
+    </form>
     {% endif %}
      </div>
 
 
     {% if request.get_full_path == "/review/posts/" %}
     <div class="action-button">
-        <form method="GET" action="{% url 'ticket_delete' post.ticket.id  %}">
-            <button class="btn btn-default" type="submit">**Pas TOuche **Supprimer votre demande</button> 
+        <form method="GET" action="{% url 'review_delete' post.id  %}">
+            {% csrf_token %}
+            <button class="btn btn-default" type="submit">Supprimer votre critique</button> 
         </form>
         
         <form method="GET" action="{% url 'review_update' post.id  %}">
             <button class="btn btn-default" type="submit"  value="Update">Modifier votre critique</button> 
+            {% csrf_token %}
         </form>
     </div>
     {% endif %}

@@ -3,6 +3,7 @@
 {% block content %}
 
 <div class="post-list">
+    <br>
     {% if request.get_full_path == "/review/feed/" %}
     <div class="feed-button">
         <form method="GET"  action="{% url 'create_ticket' %}">
@@ -13,7 +14,8 @@
         </form>
     </div>
     {% endif %}
-
+    
+    <br>
     <ul>
         {% for post in posts%}
         <li class="post">

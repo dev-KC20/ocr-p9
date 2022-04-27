@@ -1,5 +1,6 @@
 # local remains local
 local/
+flake8_report/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

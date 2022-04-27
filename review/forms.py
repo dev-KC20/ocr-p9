@@ -25,7 +25,7 @@ class TicketForm(ModelForm):
 
     title = forms.CharField(label="Titre", label_suffix="")
     description = forms.CharField(max_length=2048, label_suffix="")
-    image = forms.ImageField(label_suffix="")
+    image = forms.ImageField(label_suffix="", required=False, attrs={"placeholder": "Télécharger le fichier"})
 
 
 class ReviewForm(ModelForm):
@@ -71,15 +71,6 @@ class UserSubscriptionsForm(ModelForm):
 
 class ReviewCreateForm(ModelForm):
     """ """
-
-    # def __init__(self, *args, **kwargs):
-    #     """
-       
-    #     """
-    #     if "related_ticket" in kwargs:
-    #         self.related_ticket = kwargs["related_ticket"]
-    #         self.related_ticket_id = kwargs["related_ticket_id"]
-    #     super(ReviewCreateForm, self).__init__(*args, **kwargs)
 
     RATINGS = [(0, "0"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")]
 

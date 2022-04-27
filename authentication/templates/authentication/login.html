@@ -1,20 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="col">
-    <h2 >Inscrivez-vous maintenant !</h2>
-    <form method="GET"  action="{% url 'signup' %}">
-        {% csrf_token %} 
-        <button  class="btn btn-default" type="submit">S'inscrire</button>
-    </form>
-    
-</div>
+<br/>
 
-<div class="col">
-    <h2>Connectez-vous </h2>
-    <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button class="btn btn-default" type="submit">Se connecter</button>
-    </form>
+<div class="authenticate">
+    <div class="registration">
+        <h2 >Inscrivez-vous maintenant !</h2>
+        <br/>
+        <form method="GET"  action="{% url 'signup' %}">
+            {% csrf_token %} 
+            <button  class="btn btn-default" type="submit">S'inscrire</button>
+        </form>
+        
+    </div>
+    
+    <br/>
+    <div class="login">
+        <h2>Connectez-vous </h2>
+        <br/>
+        <form method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <button class="btn btn-default" type="submit">Se connecter</button>
+        </form>
+    </div>
 </div>
 {% endblock content %}

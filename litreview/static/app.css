@@ -31,8 +31,6 @@ header {
   font-size: 1em;
   font-variant-caps: small-caps;
   color: black;
-  /* padding: 8px 5px 8px 5px; */
-  /* border: dotted 1px black; */
 }
 
 .navbar a {
@@ -44,6 +42,8 @@ header {
   font-size: 1.2em;
   font-weight: lighter;
   font-variant-caps: small-caps;
+  position: fixed;
+  top: 2px;
 }
 
 .navbar-brand {
@@ -55,24 +55,27 @@ header {
   left: 45%;
 }
 
+.navbar-menu {
+  margin-left: 70%;
+  position: fixed;
+  overflow: hidden;
+  top: 2px;
+}
 .navbar-item {
   font-size: 1em;
   font-variant-caps: small-caps;
-  margin-left: 5px;
-  float: right;
+  font-weight: lighter;
 }
 
 
 /* Style page content */
 .main {
-  /* height: 100%; */
   padding: 5px;
 }
 
 .main {
-  width: 100%;
+  /* width: 80%; */
   padding: 20px;
-  /* display: flex; */
   align-items: normal;
   justify-content: center;
 }
@@ -169,15 +172,68 @@ header {
   /* text-decoration: none; */
 }
 
-div.col {
-  width: 100%;
-  padding-bottom: 20px;
-  text-align: center;
+
+.authenticate {
+  padding: 20px;
+  /* align-items: normal; */
+  display: flex;
+  width: 90%;
 }
 
-div.col:nth-child(1)>form>button {
-  display: inline-block;
+.login {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 100%;
+  padding-top: 2%;
 }
+
+.login > form > p > input{
+  display:block;
+  text-align: center;
+  width: 100%;
+} 
+
+.login > form > button.btn{
+  margin-left: 70%;
+} 
+
+.registration {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 100%;
+  padding-top: 2%;
+}
+
+
+
+.register {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 40%;
+  padding-top: 2%;
+}
+
+.register > form > p {
+  margin: 2%;
+  padding: 2%;
+} 
+.register > form > p > input{
+  display:block;
+  text-align: center;
+  width: 100%;
+  padding: 2%;
+  border: solid  1px black;
+} 
+
+.register > form > button.btn {
+  left: 35%;
+  position: relative;
+} 
+
+
 
 
 .follower-item {
@@ -267,6 +323,7 @@ div.col:nth-child(1)>form>button {
   position: fixed;
   left: 0;
   bottom: 0;
+  margin-bottom: 0;
   width: 100%;
   background-color: rgb(247, 241, 232);
 }
@@ -292,6 +349,7 @@ div.col:nth-child(1)>form>button {
   padding: 5px;
 }
 
+
 .action-button,
 .feed-button {
   display: flex;
@@ -313,14 +371,9 @@ width: max-content;
   font-variant-caps: small-caps;
 }
 
-li.post>div>form>button {
-  margin-left: 80%;
-  font-variant-caps: small-caps;
-}
-
 .create-review>form>button,
 .create-ticket>form>button {
-  margin-left: 90%;
+  margin-left: 80%;
   font-variant-caps: small-caps;
 }
 
@@ -339,10 +392,6 @@ li.post>div>form>button {
   padding: 5px;
 
 }
-
-/* .review-content {
-  font-variant-caps: normal;
-} */
 
 .review-ww {
   font-size: medium;
@@ -366,9 +415,13 @@ li.post>div>form>button {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 60%;
+  width: 80%;
 }
 
+div.create-review h2,
+div.create-ticket h2 {
+  text-align: center;
+}
 
 input#id_title,
 input#id_headline,

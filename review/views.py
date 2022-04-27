@@ -117,7 +117,9 @@ class ReviewCreateView(CreateView, LoginRequiredMixin):
             rating = form.cleaned_data.get("rating")
             headline = form.cleaned_data.get("headline")
             body = form.cleaned_data.get("body")
-            Review.objects.create(ticket=self.related_ticket, rating=rating, user=self.user, headline=headline, body=body)
+            Review.objects.create(
+                ticket=self.related_ticket, rating=rating, user=self.user, headline=headline, body=body
+            )
             return redirect("feed")
         context = {
             "form": form,

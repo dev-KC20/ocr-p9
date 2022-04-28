@@ -371,10 +371,15 @@ width: max-content;
   font-variant-caps: small-caps;
 }
 
+.create-review form input,
+.create-review button,
 .create-review>form>button,
+
 .create-ticket>form>button {
   margin-left: 80%;
   font-variant-caps: small-caps;
+  /* position: relative;
+  left:80% */
 }
 
 .cover {
@@ -406,6 +411,7 @@ width: max-content;
 .star-icon {
   width: 5%;
 }
+
 
 .create-review,
 .create-ticket {

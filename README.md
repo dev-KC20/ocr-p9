@@ -27,22 +27,26 @@ L’application présente deux cas d’utilisation principaux :
 ### Connexion
 Un utilisateur doit être connecté pour accéder aux services de LitReview.
 
-S'il ne possède pas encore de compte, il est invité à le créer sur la page d'accueil.
+S'il ne possède pas encore de compte, l'utilisateur est invité à créer un nouveau compte dès la page d'accueil.
 
-Une fois connecté, il visualise le flux des demandes et des critiques soit qu'il a lui-même créé, soit des autres membres qu'il a décidé de suivre.
+Une fois connecté, l'utilisateur visualise le flux des demandes et des critiques  qu'il a lui-même créées ainsi que celles d'autres membres qu'il a décidé de suivre.
 
 ### Abonnements
-Afin de suivre un membre, il se rend dans la page "Abonnements".
-Sur cette page, il peut :
+Afin de suivre un membre, l'utilisateur se rend sur la page "Abonnements".
+Sur cette page, l'utilisateur peut :
 1. s'abonner en sélectionnant dans la liste un membre qu'il souhaite suivre.
 2. visualiser la liste des membres qui le suivent
 3. visualiser la liste de ses abonnements et éventuellement s'y désabonner.
 
-### Flux et Post
+L'utilisateur ne peut s'abonner à lui-même.
 
-La page du Flux lui permet de consulter l'ensemble des demandes et des critiques de ses abonnements ou de lui-même. Il peut également y créer une nouvelle demande ou y rédiger une critique.
 
-La page des Posts lui permet de consulter l'ensemble de ses demandes et critiques. Il peut également les modifier ou les supprimer. Cependant, il ne peut supprimer une demande tant qu'il existe une critique qui y est rattachée
+### Flux et Posts
+
+La page du Flux permet à l'utilisateur de consulter l'ensemble des demandes et des critiques de ses abonnements ou de lui-même. 
+A partir de la page du flux principal, l'utilisateur peut également créer une nouvelle demande ou rédiger une critique.  
+  
+La page des Posts permet à l'utilisateur de consulter l'ensemble de ses demandes et critiques. Il peut alors les modifier ou les supprimer. Cependant, il ne peut supprimer une demande tant qu'il existe une critique qui y est rattachée.
 
 
 

@@ -25,7 +25,11 @@ class TicketForm(ModelForm):
 
     title = forms.CharField(label="Titre", label_suffix="")
     description = forms.CharField(max_length=2048, label_suffix="")
-    image = forms.ImageField(label_suffix="", required=False, attrs={"placeholder": "Télécharger le fichier"})
+    image = forms.ImageField(
+        label_suffix="", required=False,)
+    # image = forms.ImageField(
+    #     label_suffix="", required=False, widget=forms.FileInput(attrs={"placeholder": "Télécharger le fichier"})
+    # )
 
 
 class ReviewForm(ModelForm):
@@ -45,6 +49,7 @@ class UserSubscriptionsForm(ModelForm):
     validation: Check the user to subscribe to
 
     """
+
     def __init__(self, *args, **kwargs):
         """
         get the connected user from the view.

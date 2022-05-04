@@ -130,6 +130,7 @@ header {
   margin-right: auto;
 }
 
+.alert.alert-danger strong,
 .errorlist {
   color: crimson;
   animation: blink 2s linear infinite;

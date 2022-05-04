@@ -95,6 +95,31 @@ il est conseillé sous le prompt bash python (ici cmd Anaconda3 sous Windows 10)
     http://127.0.0.1:8000/
 
 
+nb : une base de donnée pré-remplie, db.sqlite3 est à disposition pour un aperçu rapide. Les utilisateurs toto et tata ont leur nom pour mot de passe. Si vous souhaitez débuter avec une base de donnée vierge, il vous suffit de supprimer le fichier db.sqlite3 ; l'application en crééra un nouveau à la première connexion.
+Pour un test plus simple la sécurité liée au mot de passe a été provisoirement diminuée.
+Pour revenir à un standard plus fort, il faut décommenter les 3 contraintes correspondantes de settings.py situé sous le répertoire 'litreview' :
+
+```py
+AUTH_PASSWORD_VALIDATORS = [
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {
+            "min_length": 4,
+        },
+    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
+]
+
+```
+
 
 ### Gestion des secrets
 

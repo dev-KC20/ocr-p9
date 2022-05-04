@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "authentication",
     "review",
     # "debug_toolbar",
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

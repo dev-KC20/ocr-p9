@@ -63,12 +63,6 @@ def posts(request):
     return render(request, "review/feed.html", context=context)
 
 
-class HomeView(LoginRequiredMixin, ListView):
-    model = Ticket
-    template_name = "review/home.html"
-    paginate_by = 5
-
-
 class TicketDetailView(DetailView, LoginRequiredMixin):
     model = Ticket
     template_name = "review/ticket_show.html"

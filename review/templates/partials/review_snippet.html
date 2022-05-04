@@ -38,15 +38,6 @@
     {% endif %}
 </div>
 
-<div class="action-button">
-
-    {% if request.path == "/never-in-review/feed/" %}
-    <form method="GET" action="{% url 'review_create' post.ticket.id  %}">
-        {% csrf_token %} 
-        <button class="btn btn-default" type="submit">Créer une critique</button> 
-    </form>
-    {% endif %}
-     </div>
 
 
     {% if request.get_full_path == "/review/posts/" %}

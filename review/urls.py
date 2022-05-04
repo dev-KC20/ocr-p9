@@ -6,7 +6,6 @@ from django.urls import path
 
 import review.views
 from review.views import (
-    # HomeView,
     TicketDetailView,
     TicketCreateView,
     TicketUpdateView,
@@ -24,12 +23,25 @@ urlpatterns = [
     path("", review.views.feed, name="feed"),
     path("feed/", review.views.feed, name="feed"),
     path("posts/", review.views.posts, name="posts"),
-    path("home/", review.views.feed, name="home"),
-    # path("home/", HomeView.as_view(template_name="review/home.html"), name="home"),
     path(
         "ticket/create-ticket/",
         TicketCreateView.as_view(),
         name="create_ticket",
+    ),
+    path(
+        "ticket/<int:pk>/update/",
+        TicketUpdateView.as_view(),
+        name="ticket_update",
+    ),
+    path(
+        "ticket/<int:pk>/delete/",
+        TicketDeleteView.as_view(),
+        name="ticket_delete",
+    ),
+    path(
+        "ticket/<int:pk>/view/",
+        TicketDetailView.as_view(),
+        name="ticket_show",
     ),
     path(
         "review/<int:pk>/create-review/",
@@ -42,11 +54,6 @@ urlpatterns = [
         name="create_full_review",
     ),
     path(
-        "ticket/<int:pk>/update/",
-        TicketUpdateView.as_view(),
-        name="ticket_update",
-    ),
-    path(
         "review/<int:pk>/update/",
         ReviewUpdateView.as_view(),
         name="review_update",
@@ -55,16 +62,6 @@ urlpatterns = [
         "review/<int:pk>/delete/",
         ReviewDeleteView.as_view(),
         name="review_delete",
-    ),
-    path(
-        "ticket/<int:pk>/delete/",
-        TicketDeleteView.as_view(),
-        name="ticket_delete",
-    ),
-    path(
-        "ticket/<int:pk>/view/",
-        TicketDetailView.as_view(),
-        name="ticket_show",
     ),
     path(
         "subscriptions/",

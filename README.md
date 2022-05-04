@@ -150,3 +150,9 @@ _Decouple_ helps you to organize your settings so that you can change parameters
 
 If `SECRET_KEY` is not present in the `.env`, _decouple_ will raise an `UndefinedValueError`.
 This _fail fast_ policy helps you avoid chasing misbehaviours when you eventually forget a parameter.
+
+
+### Conformité PEP8
+
+![](litreview/static/img/flake8-report-html-2022-05-04-053010.png)  
+

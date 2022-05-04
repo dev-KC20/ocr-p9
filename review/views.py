@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy  # reverse,
 
-from django.views.generic import DetailView, ListView  # TemplateView,
+from django.views.generic import DetailView  # , ListView, TemplateView,
 from django.views.generic.edit import CreateView, DeleteView, UpdateView  # , FormView
 
 from review.forms import TicketForm, UserSubscriptionsForm, ReviewCreateForm
